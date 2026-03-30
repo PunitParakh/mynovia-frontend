@@ -1,0 +1,92 @@
+'use client'
+import { useEffect, useState } from 'react'
+import { useRouter, usePathname } from 'next/navigation'
+import Sidebar from '@/components/admin/Sidebar'
+import { getMe } from '@/lib/api'
+
+export default function AdminLayout({ children }) {
+  const router = useRouter()
+  const pathname = usePathname()
+  const [authed, setAuthed] = useState(false)
+  const [user, setUser] = useState(null)
+
+  useEffect(() => {
+    if (pathname === '/admin/login') {
+      setAuthed(true)
+      return
+    }
+
+    const token = localStorage.getItem('mynovia_token')
+    const expires = localStorage.getItem('mynovia_token_expires')
+    
+    // Auto logout if 1 hr passed
+    if (!token || !expires || Date.now() > parseInt(expires, 10)) {
+      localStorage.removeItem('mynovia_token')
+      localStorage.removeItem('mynovia_user')
+      localStorage.removeItem('mynovia_token_expires')
+      router.push('/admin/login')
+      return
+    }
+
+    // Validate token with backend
+    getMe()
+      .then(userData => {
+        setUser(userData)
+        localStorage.setItem('mynovia_user', JSON.stringify(userData))
+        setAuthed(true)
+      })
+      .catch(() => {
+        // Token is invalid or expired — clear and redirect
+        localStorage.removeItem('mynovia_token')
+        localStorage.removeItem('mynovia_user')
+        localStorage.removeItem('mynovia_token_expires')
+        router.push('/admin/login')
+      })
+
+    // Continuous check every minute
+    const interval = setInterval(() => {
+      const currentExpires = localStorage.getItem('mynovia_token_expires')
+      if (!currentExpires || Date.now() > parseInt(currentExpires, 10)) {
+        localStorage.removeItem('mynovia_token')
+        localStorage.removeItem('mynovia_user')
+        localStorage.removeItem('mynovia_token_expires')
+        setAuthed(false)
+        router.push('/admin/login')
+      }
+    }, 60000)
+
+    return () => clearInterval(interval)
+  }, [pathname, router])
+
+  if (!authed) return null
+
+  if (pathname === '/admin/login') {
+    return <>{children}</>
+  }
+
+  function handleLogout() {
+    localStorage.removeItem('mynovia_token')
+    localStorage.removeItem('mynovia_user')
+    localStorage.removeItem('mynovia_token_expires')
+    router.push('/admin/login')
+  }
+
+  return (
+    <div className="flex min-h-screen bg-gray-50">
+      <Sidebar />
+      <div className="flex-1 flex flex-col">
+        <header className="bg-white border-b border-gray-200 px-8 py-4 flex items-center justify-between">
+          <h2 className="font-sans text-sm font-medium text-charcoal">
+            Welcome, <span className="text-gold">{user?.name || 'Admin'}</span>
+          </h2>
+          <button onClick={handleLogout} className="text-xs font-sans text-body-gray hover:text-red-500 transition-colors">
+            Logout
+          </button>
+        </header>
+        <main className="flex-1 p-8">
+          {children}
+        </main>
+      </div>
+    </div>
+  )
+}
