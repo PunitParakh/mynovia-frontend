@@ -2,11 +2,15 @@
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
-import { fetchDresses, fetchCategories } from '@/lib/api'
+import { fetchDresses, fetchCategories, getPageHero } from '@/lib/api'
 
 export default function DressesPage() {
   const [dresses, setDresses] = useState([])
   const [categories, setCategories] = useState([])
+  const [selectedStyle, setSelectedStyle] = useState(null)
+  const [availableStyles, setAvailableStyles] = useState([])
+  const [heroData, setHeroData] = useState({ image_url: null, title: 'Our Dresses', description: 'Discover our exclusive bridal collection' })
+  const [isFilterOpen, setIsFilterOpen] = useState(false)
   
   // Default descriptions for categories
   const categoryDescriptions = {
@@ -17,7 +21,29 @@ export default function DressesPage() {
   }
   
   useEffect(() => {
-    fetchDresses().then(data => setDresses(data || [])).catch(() => setDresses([]))
+    // Load hero data
+    getPageHero('dresses').then(data => {
+      if (data?.image_url) setHeroData(data)
+    }).catch(() => {})
+
+    fetchDresses().then(data => {
+      setDresses(data || [])
+      // Extract unique styles from dresses
+      if (data && Array.isArray(data)) {
+        const stylesMap = new Map()
+        data.forEach(dress => {
+          // Get variants with styles
+          if (Array.isArray(dress.variants)) {
+            dress.variants.forEach(variant => {
+              if (variant.dress_styles) {
+                stylesMap.set(variant.dress_styles.id, variant.dress_styles)
+              }
+            })
+          }
+        })
+        setAvailableStyles(Array.from(stylesMap.values()))
+      }
+    }).catch(() => setDresses([]))
     
     fetchCategories('dress').then(data => {
       if (data && Array.isArray(data)) {
@@ -35,6 +61,16 @@ export default function DressesPage() {
   // Use fetched categories, fallback to empty array
   const categoriesData = categories.length > 0 ? categories : []
 
+  // Filter dresses based on selected style
+  const filteredDresses = selectedStyle 
+    ? dresses.filter(dress => {
+        if (Array.isArray(dress.variants)) {
+          return dress.variants.some(variant => variant.dress_styles?.id === selectedStyle)
+        }
+        return false
+      })
+    : dresses
+
   const heroRef = useRef(null)
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] })
   const yBg = useTransform(scrollYProgress, [0, 1], ["0%", "50%"])
@@ -42,25 +78,21 @@ export default function DressesPage() {
 
   return (
     <div className="bg-[#FAF9F6] min-h-screen overflow-hidden">
-      {/* Cinematic Hero Section */}
+      {/* Redesigned Hero Section */}
       <section ref={heroRef} className="relative w-full h-screen min-h-[700px] overflow-hidden bg-charcoal">
         <motion.div style={{ y: yBg }} className="absolute inset-0 z-0">
           <motion.img
             initial={{ scale: 1.1, opacity: 0 }}
-            animate={{ scale: 1, opacity: 0.8 }}
-            transition={{ duration: 2, ease: "easeOut" }}
-            src="/images/dresses_hero.png"
-            alt="Wedding Dresses Collection"
+            animate={{ scale: 1, opacity: 0.85 }}
+            transition={{ duration: 2.5, ease: "easeOut" }}
+            src={heroData.image_url || "/images/dresses_hero.png"}
+            alt={heroData.title}
             className="w-full h-full object-cover"
           />
-          {/* Dark overlay for text readability */}
-          <div className="absolute inset-0 bg-black/65" />
-          {/* Bottom gradient */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#FAF9F6] via-transparent to-black/40" />
-          {/* Additional radial overlay for center text area */}
-          <div className="absolute inset-0 bg-radial-gradient" style={{
-            background: 'radial-gradient(circle at center, rgba(0,0,0,0.4), rgba(0,0,0,0.8))'
-          }} />
+          {/* Gradient overlay with gold accent */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/30" />
+          {/* Gold accent bar */}
+          <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-gold to-transparent opacity-60" />
         </motion.div>
 
         <motion.div 
@@ -70,14 +102,43 @@ export default function DressesPage() {
           transition={{ duration: 1.2, delay: 0.5, ease: "easeOut" }}
           className="relative z-10 flex flex-col items-center justify-center h-full text-center text-white px-6 w-full max-w-5xl mx-auto"
         >
-          <span className="text-[12px] font-sans tracking-[6px] uppercase block mb-6 text-white font-semibold" style={{ textShadow: '0 4px 12px rgba(0,0,0,0.8), 0 2px 6px rgba(0,0,0,0.6)' }}>LUXURY COLLECTION</span>
-          <h1 className="font-heading text-6xl md:text-8xl lg:text-9xl font-light mb-8 tracking-wide" style={{ textShadow: '0 6px 20px rgba(0,0,0,0.9), 0 3px 10px rgba(0,0,0,0.8)' }}>
-            Our <em>Dresses</em>
-          </h1>
-          <Link href="#collections" className="group mt-8 inline-flex flex-col items-center gap-4 text-[11px] font-sans tracking-[3px] uppercase hover:text-gold transition-colors font-semibold" style={{ textShadow: '0 3px 10px rgba(0,0,0,0.8)' }}>
-            <span>Discover</span>
-            <span className="w-[1px] h-12 bg-white group-hover:bg-gold transition-colors origin-top block animate-pulse"></span>
-          </Link>
+          <motion.span 
+            initial={{ opacity: 0, letterSpacing: '0.3em' }}
+            animate={{ opacity: 1, letterSpacing: '0.6em' }}
+            transition={{ duration: 1, delay: 0.3 }}
+            className="text-[11px] font-sans tracking-[6px] uppercase block mb-6 font-semibold text-gold drop-shadow-lg"
+          >
+            COLLECTION
+          </motion.span>
+          
+          <motion.h1 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.5 }}
+            className="font-heading text-6xl md:text-7xl lg:text-8xl font-light mb-8 tracking-wide drop-shadow-lg"
+            style={{ textShadow: '0 8px 30px rgba(0,0,0,0.9)' }}
+          >
+            {heroData.title || 'Our Dresses'}
+          </motion.h1>
+          
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.7 }}
+            className="text-white/90 font-body text-base md:text-lg max-w-2xl mb-10 drop-shadow-lg"
+          >
+            {heroData.description}
+          </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.9 }}
+          >
+            <Link href="#collections" className="group inline-flex items-center gap-4 text-[11px] font-sans tracking-[3px] uppercase hover:text-gold transition-colors font-semibold" style={{ textShadow: '0 3px 10px rgba(0,0,0,0.8)' }}>
+              <span>Explore Collections</span>
+            </Link>
+          </motion.div>
         </motion.div>
       </section>
 
@@ -233,7 +294,115 @@ export default function DressesPage() {
             </p>
           </motion.div>
 
-          {dresses.length > 0 ? (
+          {/* Style Filter Button */}
+          {availableStyles.length > 0 && (
+            <div className="flex justify-end mb-6">
+              <button
+                onClick={() => setIsFilterOpen(!isFilterOpen)}
+                className="flex items-center gap-2 px-6 py-3 border-2 border-charcoal text-charcoal font-sans font-semibold uppercase tracking-wide hover:bg-charcoal hover:text-white transition-all duration-300 text-sm"
+              >
+                <span>FILTER</span>
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+                </svg>
+              </button>
+            </div>
+          )}
+
+          {/* Filter Sidebar */}
+          <AnimatePresence>
+            {isFilterOpen && availableStyles.length > 0 && (
+              <>
+                {/* Overlay */}
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  onClick={() => setIsFilterOpen(false)}
+                  className="fixed inset-0 bg-black/40 z-40"
+                />
+
+                {/* Filter Panel */}
+                <motion.div
+                  initial={{ x: '100%', opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  exit={{ x: '100%', opacity: 0 }}
+                  transition={{ duration: 0.3, ease: 'easeInOut' }}
+                  className="fixed right-0 top-0 h-full w-full max-w-sm bg-white shadow-2xl z-50 overflow-y-auto"
+                >
+                  {/* Header */}
+                  <div className="flex justify-between items-center p-6 border-b border-gray-200 sticky top-0 bg-white">
+                    <h2 className="font-heading text-xl text-charcoal font-light">FILTER</h2>
+                    <button
+                      onClick={() => setIsFilterOpen(false)}
+                      className="text-charcoal hover:text-gold transition-colors"
+                    >
+                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                    </button>
+                  </div>
+
+                  {/* Filter Content */}
+                  <div className="p-6">
+                    {/* Style Filter Section */}
+                    <div className="mb-8">
+                      <h3 className="font-sans font-semibold text-charcoal uppercase tracking-wide text-sm mb-4">Filter by Style</h3>
+                      <button
+                        onClick={() => setSelectedStyle(null)}
+                        className={`w-full text-left px-4 py-3 border-2 transition-all mb-2 text-sm font-sans ${
+                          selectedStyle === null 
+                            ? 'border-gold bg-gold text-white' 
+                            : 'border-gray-300 text-body-gray hover:border-gold'
+                        }`}
+                      >
+                        All Styles
+                      </button>
+                      <div className="space-y-2">
+                        {availableStyles.map(style => (
+                          <button
+                            key={style.id}
+                            onClick={() => setSelectedStyle(style.id)}
+                            className={`w-full text-left px-4 py-3 border-2 transition-all text-sm font-sans ${
+                              selectedStyle === style.id 
+                                ? 'border-gold bg-gold text-white' 
+                                : 'border-gray-300 text-body-gray hover:border-gold'
+                            }`}
+                          >
+                            {style.name}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Footer Buttons */}
+                  <div className="fixed bottom-0 right-0 left-0 max-w-sm bg-white border-t border-gray-200 p-6 flex gap-3">
+                    <button
+                      onClick={() => {
+                        setSelectedStyle(null)
+                        setIsFilterOpen(false)
+                      }}
+                      className="flex-1 px-4 py-3 border-2 border-gray-300 text-charcoal font-sans font-semibold uppercase tracking-wide hover:bg-gray-100 transition-all text-sm"
+                    >
+                      Clear
+                    </button>
+                    <button
+                      onClick={() => setIsFilterOpen(false)}
+                      className="flex-1 px-4 py-3 bg-charcoal text-white font-sans font-semibold uppercase tracking-wide hover:bg-opacity-90 transition-all text-sm"
+                    >
+                      View ({filteredDresses.length})
+                    </button>
+                  </div>
+
+                  {/* Spacer for footer */}
+                  <div className="h-24" />
+                </motion.div>
+              </>
+            )}
+          </AnimatePresence>
+
+          {filteredDresses.length > 0 ? (
             <motion.div 
               variants={{
                 hidden: {},
@@ -244,7 +413,7 @@ export default function DressesPage() {
               viewport={{ once: true, margin: "-10%" }}
               className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
             >
-              {dresses.map((dress) => {
+              {filteredDresses.map((dress) => {
                 const imgUrl = dress.dress_images?.sort((a,b)=>a.display_order-b.display_order)?.[0]?.image_url || 'https://images.unsplash.com/photo-1594463750939-ebb28c3f7f75?w=400&q=80';
                 const categoryName = dress.categories?.name || 'Dress';
                 return (
@@ -273,7 +442,7 @@ export default function DressesPage() {
             <div className="h-64 flex items-center justify-center border border-[#E5E5E5] bg-white rounded-lg">
               <div className="text-center">
                 <p className="font-heading text-2xl text-[#333] mb-2">No Dresses Found</p>
-                <p className="font-body text-[#7a7a7a] text-sm">Check back soon for our newest collection</p>
+                <p className="font-body text-[#7a7a7a] text-sm">No dresses match the selected style. Try a different filter.</p>
               </div>
             </div>
           )}
