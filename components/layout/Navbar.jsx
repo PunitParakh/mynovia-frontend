@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { fetchCategories } from '@/lib/api'
+import { fetchCategories, fetchSections } from '@/lib/api'
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
@@ -43,20 +43,40 @@ export default function Navbar() {
   useEffect(() => {
     const loadCats = async () => {
       try {
-        const [dCats, aCats] = await Promise.all([
+        const [dCats, aCats, sections] = await Promise.all([
           fetchCategories('dress').catch(() => null),
-          fetchCategories('accessory').catch(() => null)
+          fetchCategories('accessory').catch(() => null),
+          fetchSections().catch(() => [])
         ])
 
+        const orderSection = sections?.find(s => s.section_name === 'categories_order')
+        const orderMap = orderSection?.content || { dress: [], accessory: [] }
+
         if (dCats && dCats.length > 0) {
+          const sortedDCats = [...dCats].sort((a, b) => {
+            const idxA = orderMap.dress?.indexOf(a.slug) ?? -1
+            const idxB = orderMap.dress?.indexOf(b.slug) ?? -1
+            if (idxA === -1 && idxB === -1) return 0
+            if (idxA === -1) return 1
+            if (idxB === -1) return -1
+            return idxA - idxB
+          })
           setDressCategories(
-            dCats.map(c => ({ label: c.name, href: `/dresses/${c.slug}` }))
+            sortedDCats.map(c => ({ label: c.name, href: `/dresses/${c.slug}` }))
           )
         }
 
         if (aCats && aCats.length > 0) {
+          const sortedACats = [...aCats].sort((a, b) => {
+            const idxA = orderMap.accessory?.indexOf(a.slug) ?? -1
+            const idxB = orderMap.accessory?.indexOf(b.slug) ?? -1
+            if (idxA === -1 && idxB === -1) return 0
+            if (idxA === -1) return 1
+            if (idxB === -1) return -1
+            return idxA - idxB
+          })
           setAccCategories(
-            aCats.map(c => ({ label: c.name, href: `/accessories/${c.slug}` }))
+            sortedACats.map(c => ({ label: c.name, href: `/accessories/${c.slug}` }))
           )
         }
       } catch (err) { }
@@ -65,13 +85,15 @@ export default function Navbar() {
   }, [])
 
   // Only apply transparent navbar on pages with dark hero sections
-  const isDressesMain = pathname === '/dresses'
-  const isAccessoriesMain = pathname === '/accessories'
-  const hasHero = isHome || isDressesMain || isAccessoriesMain
+  const hasHero = isHome
   const isTransparent = hasHero && !scrolled && !mobileOpen
-  const navBg = isTransparent ? 'bg-transparent' : 'bg-[#FAF9F6] shadow-sm'
-  const textColor = isTransparent ? 'text-white' : 'text-charcoal'
-  const hoverColor = isTransparent ? 'hover:text-white/70' : 'hover:text-gold'
+  const navBg = isTransparent 
+    ? 'bg-transparent' 
+    : scrolled 
+      ? 'bg-white/70 backdrop-blur-md shadow-sm' 
+      : 'bg-white shadow-sm'
+  const textColor = (isTransparent && !scrolled) ? 'text-white' : 'text-charcoal'
+  const hoverColor = (isTransparent && !scrolled) ? 'hover:text-white/70' : 'hover:text-gold'
 
   const navLinksRight = [
     { label: 'GALLERY', href: '/gallery' },
@@ -145,8 +167,18 @@ export default function Navbar() {
               </div>
             </div>
 
-            <Link href="/" className="flex-shrink-0 text-center mx-4 group">
-              <img src="/image (1).png" alt="My Novia Logo" className="h-32 lg:h-48 object-contain filter drop-shadow-md brightness-75" />
+            <Link href="/" className="flex-shrink-0 text-center mx-4 group relative z-[60] flex items-center justify-center w-[120px] lg:w-[240px] h-full">
+              <img 
+                src="/logo.png" 
+                alt="My Novia" 
+                className="absolute w-auto object-contain transition-all duration-700 ease-in-out group-hover:scale-105 h-24 md:h-32 lg:h-[130px] top-1/2 -translate-y-1/2"
+                style={{ 
+                  filter: (isTransparent && !scrolled)
+                    ? 'drop-shadow(0px 2px 4px rgba(0,0,0,0.5))' 
+                    : 'drop-shadow(0px 1px 1px rgba(0,0,0,0.8)) drop-shadow(0px 0px 4px rgba(0,0,0,0.3))',
+                  imageRendering: '-webkit-optimize-contrast'
+                }} 
+              />
             </Link>
 
             <div className="hidden lg:flex flex-1 items-center justify-end gap-8">
@@ -175,7 +207,7 @@ export default function Navbar() {
         </nav>
       </header>
 
-      {!hasHero && <div className="h-[80px] bg-[#FAF9F6]" />}
+      {!hasHero && <div className="h-[80px] bg-white" />}
 
       {mobileOpen && (
         <div className="fixed inset-0 z-40 bg-[#FAF9F6] flex flex-col pt-32 px-8 lg:hidden animate-fade-in text-charcoal overflow-y-auto">

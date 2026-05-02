@@ -38,7 +38,7 @@ export default function DressCard({ dress }) {
       <div className="px-1">
         <div className="flex items-start mb-2">
           <Link href={`/dresses/${dress.slug}`}>
-            <h3 className="font-heading text-[22px] text-[#333] hover:text-[#555] transition-colors font-light tracking-wide truncate pr-4">
+            <h3 className="font-heading text-[22px] text-[#333] hover:text-[#555] transition-colors font-light tracking-wide truncate pr-4" style={{ fontVariantNumeric: 'lining-nums' }}>
               {dress.name}
             </h3>
           </Link>
@@ -48,11 +48,6 @@ export default function DressCard({ dress }) {
           {dress.description || "Elegant and timeless, this beautiful gown features meticulous craftsmanship and premium fabrics designed to make your special day unforgettable. With delicate lace appliques, hand-beaded details, and a flowing skirt, it moves gracefully with every step."}
         </p>
         
-        {dress.categories && (
-          <p className="text-[12px] text-[#b3b3b3] font-serif italic">
-            {dress.categories.name} Wedding Dresses
-          </p>
-        )}
       </div>
     </div>
   )

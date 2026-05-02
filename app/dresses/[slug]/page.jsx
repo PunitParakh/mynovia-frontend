@@ -98,7 +98,7 @@ export default async function DressDetailPage({ params }) {
           {dress.categories && (
             <span className="section-eyebrow block mb-3">{dress.categories.name}</span>
           )}
-          <h1 className="font-display text-4xl lg:text-5xl text-charcoal mb-6">{dress.name}</h1>
+          <h1 className="font-display text-4xl lg:text-5xl text-charcoal mb-6" style={{ fontVariantNumeric: 'lining-nums' }}>{dress.name}</h1>
 
           {dress.description && (
             <p className="font-body text-body-gray leading-relaxed mb-8">{dress.description}</p>

@@ -6,12 +6,10 @@ export default function ColorPicker({ color, onChange }) {
   const [showPicker, setShowPicker] = useState(false)
   const pickerRef = useRef(null)
   const canvasRef = useRef(null)
-  const containerRef = useRef(null)
   const [hue, setHue] = useState(0)
   const [saturation, setSaturation] = useState(100)
   const [brightness, setBrightness] = useState(100)
   const [alpha, setAlpha] = useState(100)
-  const [alignRight, setAlignRight] = useState(false)
 
   // Color presets matching Coloris style
   const colorPresets = [
@@ -194,18 +192,6 @@ export default function ColorPicker({ color, onChange }) {
   }
 
   useEffect(() => {
-    if (!showPicker || !containerRef.current) return
-
-    // Check if picker would overflow to the right
-    const containerRect = containerRef.current.getBoundingClientRect()
-    const pickerWidth = 384 // w-96 in pixels
-    const spaceToRight = window.innerWidth - containerRect.right
-
-    // If not enough space on right, align to right instead
-    setAlignRight(spaceToRight < pickerWidth + 16) // 16px for margin
-  }, [showPicker])
-
-  useEffect(() => {
     const handleClickOutside = (event) => {
       if (pickerRef.current && !pickerRef.current.contains(event.target)) {
         setShowPicker(false)
@@ -222,7 +208,7 @@ export default function ColorPicker({ color, onChange }) {
   const markerTop = ((100 - brightness) / 100) * 100
 
   return (
-    <div className="relative" ref={containerRef}>
+    <div className="relative">
       {/* Color Input and Preview */}
       <div className="flex gap-2 items-center">
         <button
@@ -243,12 +229,6 @@ export default function ColorPicker({ color, onChange }) {
             className="flex-1 px-3 py-2 border-2 border-gray-200 text-sm font-mono rounded focus:outline-none focus:border-gold"
             maxLength="7"
           />
-          {/* <input
-            type="color"
-            value={hex}
-            onChange={handleColorInputChange}
-            className="w-14 h-14 p-1 border-2 border-gray-200 rounded cursor-pointer flex-shrink-0"
-          /> */}
         </div>
       </div>
 
@@ -256,9 +236,7 @@ export default function ColorPicker({ color, onChange }) {
       {showPicker && (
         <div
           ref={pickerRef}
-          className={`absolute z-50 bg-white rounded-lg shadow-2xl p-4 border border-gray-200 w-96 mt-2 space-y-4 ${
-            alignRight ? 'right-0' : 'left-0'
-          }`}
+          className="absolute z-50 bg-white rounded-lg shadow-2xl p-4 border border-gray-200 w-96 mt-2 space-y-4"
         >
           {/* Color Gradient Area */}
           <div className="space-y-2">

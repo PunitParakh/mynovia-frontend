@@ -2,6 +2,10 @@
 import { useState, useEffect } from 'react'
 import { fetchPageContent, fetchSections, adminUpdateContent, adminUpdateSection, adminUploadMedia } from '@/lib/api'
 import LoadingOverlay from '@/components/admin/LoadingOverlay'
+import dynamic from 'next/dynamic'
+import 'react-quill/dist/quill.snow.css'
+
+const ReactQuill = dynamic(() => import('react-quill'), { ssr: false })
 
 export default function ContentEditorPage() {
   const [activeTab, setActiveTab] = useState('home')
@@ -41,12 +45,7 @@ export default function ContentEditorPage() {
           subtext: 'Discover the artistry of your perfect wedding dress from one of the most beloved bridal collections.',
           ...map.featured_dresses
         },
-        featured_accessories: {
-          eyebrow: 'MY NOVIA ACCESSORIES',
-          heading: 'Refined & Memorable',
-          subtext: 'For the bride who wishes to shine with her own light. With sculpted details, intricate lace, and dazzling pieces designed to complement your look from the first to the last dance.',
-          ...map.featured_accessories
-        },
+
         appointment_cta: {
           eyebrow: 'VISIT US',
           heading: 'Experience My Novia',
@@ -54,13 +53,7 @@ export default function ContentEditorPage() {
           cta_text: 'BOOK AN APPOINTMENT',
           ...map.appointment_cta
         },
-        inspiration: {
-          eyebrow: 'BE INSPIRED',
-          heading: 'Wilderly Bride',
-          subtext: 'For the free-spirited bride.',
-          cta_text: 'VIEW COLLECTION',
-          ...map.inspiration
-        },
+
         about: {
           hero_image: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=1920&q=80',
           hero_title: 'Our Story',
@@ -85,6 +78,18 @@ export default function ContentEditorPage() {
           hours: 'Monday - Friday: 10:00 - 14:00, 17:00 - 20:30\nSaturday: 10:00 - 14:00\nSunday: Closed',
           map_embed_url: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3186.8!2d-2.46!3d36.84!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzbCsDUwJzI0LjAiTiAywrAyNyczNi4wIlc!5e0!3m2!1sen!2ses!4v1',
           ...map.contact
+        },
+        privacy: {
+          content: '',
+          ...map.privacy
+        },
+        terms: {
+          content: '',
+          ...map.terms
+        },
+        cookies: {
+          content: '',
+          ...map.cookies
         }
       })
     }).catch(err => console.error('Error fetching sections:', err))
@@ -173,7 +178,10 @@ export default function ContentEditorPage() {
   const tabs = [
     { id: 'home', label: 'Homepage' },
     { id: 'about', label: 'Our Story' },
-    { id: 'contact', label: 'Contact' }
+    { id: 'contact', label: 'Contact' },
+    { id: 'privacy', label: 'Privacy Policy' },
+    { id: 'terms', label: 'Terms of Service' },
+    { id: 'cookies', label: 'Cookies Policy' }
   ]
 
   return (
@@ -282,16 +290,7 @@ export default function ContentEditorPage() {
             <button onClick={() => saveSection('featured_dresses')} disabled={savingSection !== null || uploadingImage} className="btn-gold text-[10px] mt-4">{savingSection === 'featured_dresses' ? 'SAVING...' : 'SAVE FEATURED DRESSES'}</button>
           </div>
 
-          {/* Featured Accessories Section */}
-          <div className="bg-white p-6 rounded-lg border border-gray-200">
-            <h3 className="font-sans text-sm font-semibold text-charcoal mb-4">Featured Accessories Section</h3>
-            <div className="space-y-4">
-              <input type="text" placeholder="Eyebrow text (e.g., MY NOVIA ACCESSORIES)" value={sections.featured_accessories?.eyebrow || ''} onChange={e => updateSection('featured_accessories', 'eyebrow', e.target.value)} className="w-full px-4 py-2.5 border border-gray-200 bg-white font-sans text-sm focus:outline-none focus:border-gold" />
-              <input type="text" placeholder="Heading (e.g., Refined & Memorable)" value={sections.featured_accessories?.heading || ''} onChange={e => updateSection('featured_accessories', 'heading', e.target.value)} className="w-full px-4 py-2.5 border border-gray-200 bg-white font-sans text-sm focus:outline-none focus:border-gold" />
-              <textarea placeholder="Body Subtext" rows={2} value={sections.featured_accessories?.subtext || ''} onChange={e => updateSection('featured_accessories', 'subtext', e.target.value)} className="w-full px-4 py-3 border border-gray-200 bg-white font-sans text-sm focus:outline-none focus:border-gold resize-y" />
-            </div>
-            <button onClick={() => saveSection('featured_accessories')} disabled={savingSection !== null || uploadingImage} className="btn-gold text-[10px] mt-4">{savingSection === 'featured_accessories' ? 'SAVING...' : 'SAVE FEATURED ACCESSORIES'}</button>
-          </div>
+
 
           {/* Appointment CTA */}
           <div className="bg-white p-6 rounded-lg border border-gray-200">
@@ -333,47 +332,7 @@ export default function ContentEditorPage() {
             <button onClick={() => saveSection('appointment_cta')} disabled={savingSection !== null || uploadingImage} className="btn-gold text-[10px] mt-4">{savingSection === 'appointment_cta' ? 'SAVING...' : 'SAVE APPOINTMENT CTA'}</button>
           </div>
 
-          {/* Inspiration Section */}
-          <div className="bg-white p-6 rounded-lg border border-gray-200">
-            <h3 className="font-sans text-sm font-semibold text-charcoal mb-4">Inspiration Section (WILDERLY BRIDE)</h3>
-            <div className="space-y-4">
-              <div className="mb-4">
-                <label className="block text-xs font-sans text-body-gray mb-2">Section Image</label>
-                {sections.inspiration?.bg_image ? (
-                  <div className="relative">
-                    <img src={sections.inspiration.bg_image} alt="Inspiration" className="w-full h-48 object-cover rounded" />
-                    <div className="absolute top-2 right-2 flex gap-2">
-                      <label className="cursor-pointer bg-white/90 px-3 py-1.5 text-xs font-sans rounded hover:bg-white text-charcoal transition-colors">
-                        Replace
-                        <input type="file" accept="image/*" className="hidden" onChange={async (e) => {
-                          const file = e.target.files?.[0]
-                          if (file) {
-                            setUploadingImage(true); try { const result = await adminUploadMedia(file, 'inspiration'); updateSection('inspiration', 'bg_image', result.url); setMsg('Image uploaded!'); setTimeout(() => setMsg(''), 2000); } catch (err) { } finally { setUploadingImage(false); }
-                          }
-                        }} />
-                      </label>
-                    </div>
-                  </div>
-                ) : (
-                  <label className="block border-2 border-dashed border-gray-300 hover:border-gold rounded-lg p-8 text-center cursor-pointer transition-colors">
-                    <input type="file" accept="image/*" className="hidden" onChange={async (e) => {
-                      const file = e.target.files?.[0]
-                      if (file) {
-                        setUploadingImage(true); try { const result = await adminUploadMedia(file, 'inspiration'); updateSection('inspiration', 'bg_image', result.url); setMsg('Image uploaded!'); setTimeout(() => setMsg(''), 2000); } catch (err) { } finally { setUploadingImage(false); }
-                      }
-                    }} />
-                    <div className="text-2xl mb-2">📸</div>
-                    <p className="text-sm font-sans text-body-gray">Upload inspiration image</p>
-                  </label>
-                )}
-              </div>
-              <input type="text" placeholder="Eyebrow text" value={sections.inspiration?.eyebrow || ''} onChange={e => updateSection('inspiration', 'eyebrow', e.target.value)} className="w-full px-4 py-2.5 border border-gray-200 bg-white font-sans text-sm focus:outline-none focus:border-gold" />
-              <input type="text" placeholder="Heading" value={sections.inspiration?.heading || ''} onChange={e => updateSection('inspiration', 'heading', e.target.value)} className="w-full px-4 py-2.5 border border-gray-200 bg-white font-sans text-sm focus:outline-none focus:border-gold" />
-              <textarea placeholder="Subtext" rows={3} value={sections.inspiration?.subtext || ''} onChange={e => updateSection('inspiration', 'subtext', e.target.value)} className="w-full px-4 py-3 border border-gray-200 bg-white font-sans text-sm focus:outline-none focus:border-gold resize-y" />
-              <input type="text" placeholder="Button Text" value={sections.inspiration?.cta_text || ''} onChange={e => updateSection('inspiration', 'cta_text', e.target.value)} className="w-full px-4 py-2.5 border border-gray-200 bg-white font-sans text-sm focus:outline-none focus:border-gold" />
-            </div>
-            <button onClick={() => saveSection('inspiration')} disabled={savingSection !== null || uploadingImage} className="btn-gold text-[10px] mt-4">{savingSection === 'inspiration' ? 'SAVING...' : 'SAVE INSPIRATION'}</button>
-          </div>
+
         </div>
       )}
 
@@ -477,6 +436,29 @@ export default function ContentEditorPage() {
             <div><label className="block text-xs font-sans text-body-gray mb-2">Google Maps Embed URL</label><textarea rows={3} value={sections.contact?.map_embed_url || ''} onChange={e => updateSection('contact', 'map_embed_url', e.target.value)} className="w-full px-4 py-2.5 border border-gray-200 bg-white font-sans text-sm focus:outline-none focus:border-gold resize-y" /><p className="text-[10px] text-body-gray mt-1">Example: https://www.google.com/maps/embed?pb=...</p></div>
           </div>
           <button onClick={() => saveSection('contact')} disabled={savingSection !== null || uploadingImage} className="btn-gold text-[10px] mt-4">{savingSection === 'contact' ? 'SAVING...' : 'SAVE CONTACT CHANGES'}</button>
+        </div>
+      )}
+
+      {['privacy', 'terms', 'cookies'].includes(activeTab) && (
+        <div className="bg-white p-6 rounded-lg border border-gray-200 space-y-4">
+          <h3 className="font-sans text-sm font-semibold text-charcoal mb-4">
+            {activeTab === 'privacy' ? 'Privacy Policy' : activeTab === 'terms' ? 'Terms of Service' : 'Cookies Policy'} Content
+          </h3>
+          <div className="bg-white">
+            <ReactQuill 
+              theme="snow" 
+              value={sections[activeTab]?.content || ''} 
+              onChange={(value) => updateSection(activeTab, 'content', value)} 
+              className="h-96 mb-12"
+            />
+          </div>
+          <button 
+            onClick={() => saveSection(activeTab)} 
+            disabled={savingSection !== null} 
+            className="btn-gold text-[10px] mt-4"
+          >
+            {savingSection === activeTab ? 'SAVING...' : 'SAVE CHANGES'}
+          </button>
         </div>
       )}
     </div>
