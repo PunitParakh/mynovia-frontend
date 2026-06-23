@@ -167,17 +167,17 @@ export default function Navbar() {
               </div>
             </div>
 
-            <Link href="/" className="flex-shrink-0 text-center mx-4 group relative z-[60] flex items-center justify-center w-[120px] lg:w-[240px] h-full">
-              <img 
-                src="/logo.png" 
-                alt="My Novia" 
-                className="absolute w-auto object-contain transition-all duration-700 ease-in-out group-hover:scale-105 h-24 md:h-32 lg:h-[130px] top-1/2 -translate-y-1/2"
-                style={{ 
+            <Link href="/" className="flex-shrink-0 text-center mx-4 group relative z-[60] flex items-center justify-center w-[160px] lg:w-[300px] h-full">
+              <img
+                src="/logo.png"
+                alt="My Novia"
+                className="absolute w-auto object-contain transition-all duration-700 ease-in-out group-hover:scale-105 h-32 md:h-40 lg:h-[170px] top-1/2 -translate-y-1/2"
+                style={{
                   filter: (isTransparent && !scrolled)
-                    ? 'drop-shadow(0px 2px 4px rgba(0,0,0,0.5))' 
-                    : 'drop-shadow(0px 1px 1px rgba(0,0,0,0.8)) drop-shadow(0px 0px 4px rgba(0,0,0,0.3))',
+                    ? 'drop-shadow(0px 2px 6px rgba(0,0,0,0.45))'
+                    : 'drop-shadow(0px 1px 2px rgba(0,0,0,0.12))',
                   imageRendering: '-webkit-optimize-contrast'
-                }} 
+                }}
               />
             </Link>
 

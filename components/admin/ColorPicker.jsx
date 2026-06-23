@@ -6,10 +6,12 @@ export default function ColorPicker({ color, onChange }) {
   const [showPicker, setShowPicker] = useState(false)
   const pickerRef = useRef(null)
   const canvasRef = useRef(null)
+  const containerRef = useRef(null)
   const [hue, setHue] = useState(0)
   const [saturation, setSaturation] = useState(100)
   const [brightness, setBrightness] = useState(100)
   const [alpha, setAlpha] = useState(100)
+  const [alignRight, setAlignRight] = useState(false)
 
   // Color presets matching Coloris style
   const colorPresets = [
@@ -192,6 +194,18 @@ export default function ColorPicker({ color, onChange }) {
   }
 
   useEffect(() => {
+    if (!showPicker || !containerRef.current) return
+
+    // Check if picker would overflow to the right
+    const containerRect = containerRef.current.getBoundingClientRect()
+    const pickerWidth = 384 // w-96 in pixels
+    const spaceToRight = window.innerWidth - containerRect.right
+
+    // If not enough space on right, align to right instead
+    setAlignRight(spaceToRight < pickerWidth + 16) // 16px for margin
+  }, [showPicker])
+
+  useEffect(() => {
     const handleClickOutside = (event) => {
       if (pickerRef.current && !pickerRef.current.contains(event.target)) {
         setShowPicker(false)
@@ -208,7 +222,7 @@ export default function ColorPicker({ color, onChange }) {
   const markerTop = ((100 - brightness) / 100) * 100
 
   return (
-    <div className="relative">
+    <div className="relative" ref={containerRef}>
       {/* Color Input and Preview */}
       <div className="flex gap-2 items-center">
         <button
