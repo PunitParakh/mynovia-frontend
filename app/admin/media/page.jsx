@@ -28,23 +28,23 @@ export default function AdminMediaPage() {
   }
 
   async function handleDelete(id) {
-    if (!confirm('Delete this file?')) return
+    if (!confirm('¿Eliminar este archivo?')) return
     try { await adminDeleteMedia(id); setMedia(prev => prev.filter(m => m.id !== id)) } catch {}
   }
 
   return (
     <div>
-      <LoadingOverlay isLoading={uploading} message="Uploading Media..." />
-      <h1 className="text-2xl font-heading text-charcoal mb-8">Gallery</h1>
+      <LoadingOverlay isLoading={uploading} message="Subiendo Medios..." />
+      <h1 className="text-2xl font-heading text-charcoal mb-8">Galería</h1>
 
       <div className="mb-8">
-        <ImageUploader onUpload={handleUpload} label={uploading ? 'Uploading...' : 'Upload files to gallery'} />
+        <ImageUploader onUpload={handleUpload} label={uploading ? 'Subiendo...' : 'Subir archivos a la galería'} />
       </div>
 
       {loading ? (
-        <p className="text-center text-body-gray py-8">Loading...</p>
+        <p className="text-center text-body-gray py-8">Cargando...</p>
       ) : media.length === 0 ? (
-        <p className="text-center text-body-gray py-8">No files in gallery</p>
+        <p className="text-center text-body-gray py-8">No hay archivos en la galería</p>
       ) : (
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
           {media.map(item => (
@@ -53,7 +53,7 @@ export default function AdminMediaPage() {
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors flex items-center justify-center">
                 <button onClick={() => handleDelete(item.id)}
                   className="opacity-0 group-hover:opacity-100 transition-opacity bg-red-500 text-white text-xs px-3 py-1.5 rounded font-sans">
-                  Delete
+                  Eliminar
                 </button>
               </div>
               <p className="absolute bottom-0 left-0 right-0 bg-black/60 text-white text-[10px] font-sans px-2 py-1 truncate opacity-0 group-hover:opacity-100 transition-opacity">

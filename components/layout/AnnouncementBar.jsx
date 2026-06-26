@@ -3,8 +3,8 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 
 export default function AnnouncementBar() {
-  const [text, setText] = useState('We help you make your dreams come true!')
-  const [linkText, setLinkText] = useState('Book your appointment today')
+  const [text, setText] = useState('¡Te ayudamos a hacer tus sueños realidad!')
+  const [linkText, setLinkText] = useState('Reserva tu cita hoy')
   const [visible, setVisible] = useState(true)
 
   if (!visible) return null

@@ -48,12 +48,12 @@ export default function AttributesPage() {
       await adminCreateStyle({ name: newStyle })
       setNewStyle('')
       loadAll()
-    } catch (err) { alert('Error adding style') }
+    } catch (err) { alert('Error al añadir el estilo') }
   }
   async function handleDeleteStyle(id) {
-    if (!confirm('Delete this style?')) return
+    if (!confirm('¿Eliminar este estilo?')) return
     try { await adminDeleteStyle(id); loadAll() }
-    catch (err) { alert('Error deleting style') }
+    catch (err) { alert('Error al eliminar el estilo') }
   }
 
   // --- Sizes ---
@@ -64,12 +64,12 @@ export default function AttributesPage() {
       await adminCreateSize({ name: newSize, display_order: sizes.length })
       setNewSize('')
       loadAll()
-    } catch (err) { alert('Error adding size') }
+    } catch (err) { alert('Error al añadir la talla') }
   }
   async function handleDeleteSize(id) {
-    if (!confirm('Delete this size?')) return
+    if (!confirm('¿Eliminar esta talla?')) return
     try { await adminDeleteSize(id); loadAll() }
-    catch (err) { alert('Error deleting size') }
+    catch (err) { alert('Error al eliminar la talla') }
   }
 
   // --- Colors ---
@@ -80,12 +80,12 @@ export default function AttributesPage() {
       await adminCreateColor({ name: newColorName, hex_code: newColorHex })
       setNewColorName('')
       loadAll()
-    } catch (err) { alert('Error adding color') }
+    } catch (err) { alert('Error al añadir el color') }
   }
   async function handleDeleteColor(id) {
-    if (!confirm('Delete this color?')) return
+    if (!confirm('¿Eliminar este color?')) return
     try { await adminDeleteColor(id); loadAll() }
-    catch (err) { alert('Error deleting color') }
+    catch (err) { alert('Error al eliminar el color') }
   }
 
   // --- Selection & Bulk Delete Handlers ---
@@ -103,14 +103,14 @@ export default function AttributesPage() {
 
   const deleteSelectedStyles = async () => {
     if (selectedStyles.size === 0) return
-    if (!confirm(`Delete ${selectedStyles.size} selected style(s)?`)) return
+    if (!confirm(`¿Eliminar ${selectedStyles.size} estilo(s) seleccionado(s)?`)) return
     try {
       for (const id of selectedStyles) {
         await adminDeleteStyle(id)
       }
       setSelectedStyles(new Set())
       loadAll()
-    } catch (err) { alert('Error deleting styles') }
+    } catch (err) { alert('Error al eliminar estilos') }
   }
 
   const toggleSizeSelection = (id) => {
@@ -127,14 +127,14 @@ export default function AttributesPage() {
 
   const deleteSelectedSizes = async () => {
     if (selectedSizes.size === 0) return
-    if (!confirm(`Delete ${selectedSizes.size} selected size(s)?`)) return
+    if (!confirm(`¿Eliminar ${selectedSizes.size} talla(s) seleccionada(s)?`)) return
     try {
       for (const id of selectedSizes) {
         await adminDeleteSize(id)
       }
       setSelectedSizes(new Set())
       loadAll()
-    } catch (err) { alert('Error deleting sizes') }
+    } catch (err) { alert('Error al eliminar tallas') }
   }
 
   const toggleColorSelection = (id) => {
@@ -151,24 +151,24 @@ export default function AttributesPage() {
 
   const deleteSelectedColors = async () => {
     if (selectedColors.size === 0) return
-    if (!confirm(`Delete ${selectedColors.size} selected color(s)?`)) return
+    if (!confirm(`¿Eliminar ${selectedColors.size} color(es) seleccionado(s)?`)) return
     try {
       for (const id of selectedColors) {
         await adminDeleteColor(id)
       }
       setSelectedColors(new Set())
       loadAll()
-    } catch (err) { alert('Error deleting colors') }
+    } catch (err) { alert('Error al eliminar colores') }
   }
 
-  if (loading) return <div className="p-8 text-center text-body-gray">Loading attributes...</div>
+  if (loading) return <div className="p-8 text-center text-body-gray">Cargando atributos...</div>
 
   return (
     <div>
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-2xl font-heading text-charcoal">Attributes</h1>
-          <p className="text-body-gray text-sm font-sans mt-1">Manage styles, sizes, and colors for dress variants.</p>
+          <h1 className="text-2xl font-heading text-charcoal">Atributos</h1>
+          <p className="text-body-gray text-sm font-sans mt-1">Gestiona estilos, tallas y colores para las variantes de vestidos.</p>
         </div>
       </div>
 
@@ -176,25 +176,25 @@ export default function AttributesPage() {
         
         {/* STYLES */}
         <div className="bg-white p-6 rounded-lg border border-gray-200">
-          <h2 className="text-lg font-heading text-charcoal mb-4">Dress Styles</h2>
+          <h2 className="text-lg font-heading text-charcoal mb-4">Estilos de Vestidos</h2>
           <form onSubmit={handleAddStyle} className="flex gap-2 mb-6">
             <input type="text" value={newStyle} onChange={e => setNewStyle(e.target.value)} placeholder="e.g. A-Line" className="flex-1 px-3 py-2 border border-gray-200 text-sm font-sans focus:outline-none focus:border-gold" />
-            <button type="submit" className="px-4 py-2 bg-charcoal text-white text-xs font-sans hover:bg-gold transition-colors">Add</button>
+            <button type="submit" className="px-4 py-2 bg-charcoal text-white text-xs font-sans hover:bg-gold transition-colors">Añadir</button>
           </form>
-          
+
           <div className="flex gap-2 mb-4">
-            <button 
+            <button
               onClick={toggleAllStyles}
               className="px-3 py-2 text-xs font-sans rounded border bg-gold text-white border-gold hover:bg-charcoal transition-colors"
             >
-              Select All
+              Seleccionar Todo
             </button>
             {selectedStyles.size > 0 && (
-              <button 
+              <button
                 onClick={deleteSelectedStyles}
                 className="px-3 py-2 text-xs font-sans rounded bg-red-500 text-white hover:bg-red-600 transition-colors"
               >
-                Delete ({selectedStyles.size})
+                Eliminar ({selectedStyles.size})
               </button>
             )}
           </div>
@@ -212,31 +212,31 @@ export default function AttributesPage() {
                 <button onClick={() => handleDeleteStyle(s.id)} className="text-red-500 hover:text-red-700 text-sm">×</button>
               </li>
             ))}
-            {styles.length === 0 && <p className="text-xs text-body-gray italic">No styles added.</p>}
+            {styles.length === 0 && <p className="text-xs text-body-gray italic">No hay estilos añadidos.</p>}
           </ul>
         </div>
 
         {/* SIZES */}
         <div className="bg-white p-6 rounded-lg border border-gray-200">
-          <h2 className="text-lg font-heading text-charcoal mb-4">Sizes</h2>
+          <h2 className="text-lg font-heading text-charcoal mb-4">Tallas</h2>
           <form onSubmit={handleAddSize} className="flex gap-2 mb-6">
             <input type="text" value={newSize} onChange={e => setNewSize(e.target.value)} placeholder="e.g. Medium or 10" className="flex-1 px-3 py-2 border border-gray-200 text-sm font-sans focus:outline-none focus:border-gold" />
-            <button type="submit" className="px-4 py-2 bg-charcoal text-white text-xs font-sans hover:bg-gold transition-colors">Add</button>
+            <button type="submit" className="px-4 py-2 bg-charcoal text-white text-xs font-sans hover:bg-gold transition-colors">Añadir</button>
           </form>
-          
+
           <div className="flex gap-2 mb-4">
-            <button 
+            <button
               onClick={toggleAllSizes}
               className="px-3 py-2 text-xs font-sans rounded border bg-gold text-white border-gold hover:bg-charcoal transition-colors"
             >
-              Select All
+              Seleccionar Todo
             </button>
             {selectedSizes.size > 0 && (
-              <button 
+              <button
                 onClick={deleteSelectedSizes}
                 className="px-3 py-2 text-xs font-sans rounded bg-red-500 text-white hover:bg-red-600 transition-colors"
               >
-                Delete ({selectedSizes.size})
+                Eliminar ({selectedSizes.size})
               </button>
             )}
           </div>
@@ -254,13 +254,13 @@ export default function AttributesPage() {
                 <button onClick={() => handleDeleteSize(s.id)} className="text-red-500 hover:text-red-700 text-sm">×</button>
               </li>
             ))}
-            {sizes.length === 0 && <p className="text-xs text-body-gray italic">No sizes added.</p>}
+            {sizes.length === 0 && <p className="text-xs text-body-gray italic">No hay tallas añadidas.</p>}
           </ul>
         </div>
 
         {/* COLORS */}
         <div className="bg-white p-6 rounded-lg border border-gray-200">
-          <h2 className="text-lg font-heading text-charcoal mb-4">Colors</h2>
+          <h2 className="text-lg font-heading text-charcoal mb-4">Colores</h2>
           
           <form onSubmit={handleAddColor} className="flex flex-col gap-4 mb-6">
             <input
@@ -280,7 +280,7 @@ export default function AttributesPage() {
               type="submit"
               className="px-4 py-2 bg-charcoal text-white text-xs font-sans hover:bg-gold transition-colors w-full rounded"
             >
-              Add Color
+              Añadir Color
             </button>
           </form>
           
@@ -289,14 +289,14 @@ export default function AttributesPage() {
               onClick={toggleAllColors}
               className="px-3 py-2 text-xs font-sans rounded border bg-gold text-white border-gold hover:bg-charcoal transition-colors"
             >
-              Select All
+              Seleccionar Todo
             </button>
             {selectedColors.size > 0 && (
-              <button 
+              <button
                 onClick={deleteSelectedColors}
                 className="px-3 py-2 text-xs font-sans rounded bg-red-500 text-white hover:bg-red-600 transition-colors"
               >
-                Delete ({selectedColors.size})
+                Eliminar ({selectedColors.size})
               </button>
             )}
           </div>
@@ -317,7 +317,7 @@ export default function AttributesPage() {
                 <button onClick={() => handleDeleteColor(c.id)} className="text-red-500 hover:text-red-700 text-sm">×</button>
               </li>
             ))}
-            {colors.length === 0 && <p className="text-xs text-body-gray italic">No colors added.</p>}
+            {colors.length === 0 && <p className="text-xs text-body-gray italic">No hay colores añadidos.</p>}
           </ul>
         </div>
 

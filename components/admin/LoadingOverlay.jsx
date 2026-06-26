@@ -1,4 +1,4 @@
-export default function LoadingOverlay({ isLoading, message = 'Uploading...' }) {
+export default function LoadingOverlay({ isLoading, message = 'Subiendo...' }) {
   if (!isLoading) return null;
 
   return (

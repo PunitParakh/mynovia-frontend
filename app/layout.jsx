@@ -4,14 +4,14 @@ import Footer from '@/components/layout/Footer'
 import WhatsAppButton from '@/components/WhatsAppButton'
 
 export const metadata = {
-  title: 'My Novia — Your Bridal Boutique in Almería',
-  description: 'Discover unique wedding dresses at My Novia. Your favorite boutique in Almería with exclusive collections for your special day.',
-  keywords: 'wedding dresses, bridal, Almería, boutique, wedding, bride',
+  title: 'My Novia — Tu Boutique Nupcial en Almería',
+  description: 'Descubre vestidos de novia únicos en My Novia. Tu boutique favorita en Almería con colecciones exclusivas para tu día especial.',
+  keywords: 'vestidos de novia, nupcial, Almería, boutique, boda, novia',
 }
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="es">
       <body className="bg-[#FAF9F6]">
         <Navbar />
         <main className="min-h-screen">

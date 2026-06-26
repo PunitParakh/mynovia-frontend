@@ -38,20 +38,20 @@ export default function FeaturedDresses({ data, dresses = [] }) {
   }
 
   return (
-    <section ref={sectionRef} className="py-16 md:py-24 bg-[#FAF9F6] overflow-hidden">
+    <section ref={sectionRef} className="py-10 md:py-14 bg-[#FAF9F6] overflow-hidden">
       <div className="max-w-[1600px] mx-auto px-6 md:px-12">
-        <motion.div style={{ opacity, y: yText }} className="text-center mb-12 pb-4 border-b border-gray-100">
+        <motion.div style={{ opacity, y: yText }} className="text-center mb-8 pb-4 border-b border-gray-100">
           <span className="text-[10px] font-sans tracking-[3px] text-body-gray uppercase mb-3 block">
-            {content.eyebrow || 'MY NOVIA BRIDAL'}
+            {content.eyebrow || 'MY NOVIA NUPCIAL'}
           </span>
           <h2 className="font-heading text-4xl font-light text-charcoal mb-3">
-            {content.heading || 'Effortlessly Elegant'}
+            {content.heading || 'Elegancia sin Esfuerzo'}
           </h2>
           <p className="font-body text-body-gray text-sm leading-relaxed max-w-lg mx-auto mb-4">
-            {content.subtext || 'Discover the artistry of your perfect wedding dress from one of the most beloved bridal collections.'}
+            {content.subtext || 'Descubre el arte de tu vestido de novia perfecto de una de las colecciones nupciales más queridas.'}
           </p>
           <Link href="/dresses" className="text-[11px] font-sans font-medium tracking-[2px] uppercase text-charcoal hover:text-gold transition-colors border-b border-transparent hover:border-gold pb-1 inline-block">
-            VIEW ALL
+            VER TODO
           </Link>
         </motion.div>
 
@@ -91,7 +91,7 @@ export default function FeaturedDresses({ data, dresses = [] }) {
                     {!dress.isDummy && (
                       <div className="absolute bottom-6 left-1/2 -translate-x-1/2 w-[85%] max-w-[180px] opacity-0 group-hover/card:opacity-100 transition-all duration-500 translate-y-4 group-hover/card:translate-y-0">
                         <span className="whitespace-nowrap block w-full bg-white/95 px-4 py-3 text-[10px] font-sans font-medium tracking-[2px] uppercase text-center text-charcoal shadow-sm">
-                          VIEW DETAILS
+                          VER DETALLES
                         </span>
                       </div>
                     )}

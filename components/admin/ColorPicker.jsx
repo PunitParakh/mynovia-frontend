@@ -254,7 +254,7 @@ export default function ColorPicker({ color, onChange }) {
         >
           {/* Color Gradient Area */}
           <div className="space-y-2">
-            <label className="text-xs font-semibold text-charcoal uppercase tracking-wide block">Color Area</label>
+            <label className="text-xs font-semibold text-charcoal uppercase tracking-wide block">Área de Color</label>
             <div className="relative h-48 border-2 border-gray-200 rounded-lg overflow-hidden bg-white">
               <canvas
                 ref={canvasRef}
@@ -278,7 +278,7 @@ export default function ColorPicker({ color, onChange }) {
 
           {/* Hue Slider */}
           <div className="space-y-2">
-            <label className="text-xs font-semibold text-charcoal uppercase tracking-wide block">Hue</label>
+            <label className="text-xs font-semibold text-charcoal uppercase tracking-wide block">Tono</label>
             <div className="relative h-8 rounded-lg overflow-hidden border-2 border-gray-200">
               <div
                 className="absolute inset-0"
@@ -315,7 +315,7 @@ export default function ColorPicker({ color, onChange }) {
 
           {/* Alpha Slider */}
           <div className="space-y-2">
-            <label className="text-xs font-semibold text-charcoal uppercase tracking-wide block">Opacity</label>
+            <label className="text-xs font-semibold text-charcoal uppercase tracking-wide block">Opacidad</label>
             <div className="relative h-8 rounded-lg overflow-hidden border-2 border-gray-200">
               <div
                 className="absolute inset-0 checkered-bg"
@@ -357,7 +357,7 @@ export default function ColorPicker({ color, onChange }) {
 
           {/* Color Presets */}
           <div className="space-y-2">
-            <label className="text-xs font-semibold text-charcoal uppercase tracking-wide block">Quick Colors</label>
+            <label className="text-xs font-semibold text-charcoal uppercase tracking-wide block">Colores Rápidos</label>
             <div className="grid grid-cols-6 gap-2">
               {colorPresets.map((preset) => (
                 <button

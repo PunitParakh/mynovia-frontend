@@ -25,7 +25,7 @@ export default function WhatsAppButton() {
       whileHover={{ scale: 1.15 }}
       whileTap={{ scale: 0.95 }}
       className="fixed bottom-6 right-6 md:bottom-8 md:right-8 z-50 w-12 h-12 md:w-14 md:h-14 bg-[#25D366] rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 hover:shadow-[0_20px_40px_rgba(37,211,102,0.6)]"
-      title="Chat with us on WhatsApp"
+      title="Chatea con nosotros por WhatsApp"
     >
       {/* WhatsApp Icon */}
       <img 

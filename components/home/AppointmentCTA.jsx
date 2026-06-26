@@ -22,7 +22,7 @@ export default function AppointmentCTA({ data }) {
   }
 
   return (
-    <section ref={sectionRef} className="relative py-32 px-6 overflow-hidden min-h-[500px] flex items-center">
+    <section ref={sectionRef} className="relative py-16 px-6 overflow-hidden min-h-[400px] flex items-center">
       <motion.img
         style={{ scale: scaleBg, y: yBg }}
         src={content.bg_image || 'https://images.unsplash.com/photo-1519741497674-611481863552?w=1920&q=80'}
@@ -39,17 +39,17 @@ export default function AppointmentCTA({ data }) {
         className="relative z-10 w-full max-w-3xl mx-auto text-center text-white"
       >
         <motion.span variants={textVariants} className="text-[10px] font-sans tracking-[3px] text-white uppercase block mb-6">
-          {content.eyebrow || 'YOUR TIMELINES JOURNEY STARTS HERE'}
+          {content.eyebrow || 'TU VIAJE COMIENZA AQUÍ'}
         </motion.span>
         <motion.h2 variants={textVariants} className="font-heading text-4xl md:text-5xl lg:text-6xl font-light mb-8 text-white drop-shadow-sm">
-          {content.heading || 'Book Your Private Appointment'}
+          {content.heading || 'Reserva tu Cita Privada'}
         </motion.h2>
         <motion.p variants={textVariants} className="font-body text-white/90 mb-12 text-base md:text-lg max-w-xl mx-auto font-light leading-relaxed">
-          {content.subtext || 'Live an exclusive experience with personalized attention. We help you find the perfect dress for your big day in an intimate and luxurious setting.'}
+          {content.subtext || 'Vive una experiencia exclusiva con atención personalizada. Te ayudamos a encontrar el vestido perfecto para tu gran día en un entorno íntimo y lujoso.'}
         </motion.p>
         <motion.div variants={textVariants}>
           <Link href="/agenda-tu-cita" className="inline-block bg-white text-charcoal px-8 py-4 text-[11px] font-sans font-semibold tracking-[3px] uppercase hover:bg-gold hover:text-white transition-all duration-300">
-            {content.cta_text || 'BOOK AN APPOINTMENT'}
+            {content.cta_text || 'RESERVAR CITA'}
           </Link>
         </motion.div>
       </motion.div>

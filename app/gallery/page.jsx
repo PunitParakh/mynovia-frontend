@@ -90,7 +90,7 @@ export default function GalleryPage() {
           animate="visible"
           className="flex items-center justify-center text-[11px] font-sans tracking-[1px] text-[#7A7A7A] mb-4"
         >
-          <Link href="/" className="hover:text-charcoal transition-colors underline decoration-transparent hover:decoration-currentColor underline-offset-4">Home</Link>
+          <Link href="/" className="hover:text-charcoal transition-colors underline decoration-transparent hover:decoration-currentColor underline-offset-4">Inicio</Link>
           <motion.span
             initial={{ opacity: 0, x: -10 }}
             animate={{ opacity: 1, x: 0 }}
@@ -102,7 +102,7 @@ export default function GalleryPage() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3 }}
             className="text-[#a09e9e]"
-          >Gallery</motion.span>
+          >Galería</motion.span>
         </motion.div>
         <motion.h1
           style={{ y }}
@@ -111,7 +111,7 @@ export default function GalleryPage() {
           animate="visible"
           className="font-heading text-4xl md:text-5xl lg:text-[56px] text-[#333333] font-light tracking-wide"
         >
-          Our <em className="italic text-gold">Gallery</em>
+          Nuestra <em className="italic text-gold">Galería</em>
         </motion.h1>
         <motion.p
           variants={headerVariants}
@@ -120,7 +120,7 @@ export default function GalleryPage() {
           transition={{ delay: 0.2 }}
           className="font-body text-[#7a7a7a] text-sm leading-relaxed mt-4 max-w-2xl mx-auto"
         >
-          Explore our collection of beautiful moments and elegant designs
+          Explora nuestra colección de momentos hermosos y diseños elegantes
         </motion.p>
       </motion.div>
 
@@ -165,7 +165,7 @@ export default function GalleryPage() {
                     className="absolute bottom-4 left-1/2 -translate-x-1/2"
                   >
                     <span className="bg-white/95 px-4 py-2 text-[9px] font-sans font-medium tracking-[2px] uppercase text-charcoal shadow-sm">
-                      VIEW
+                      VER
                     </span>
                   </motion.div>
                 </div>
@@ -179,8 +179,8 @@ export default function GalleryPage() {
             transition={{ duration: 0.5 }}
             className="text-center py-24 bg-white shadow-sm border border-[#E5E5E5]"
           >
-            <h3 className="font-heading text-2xl text-charcoal mb-4">No images found</h3>
-            <p className="font-body text-[#7A7A7A]">We're currently updating our gallery. Please check back later.</p>
+            <h3 className="font-heading text-2xl text-charcoal mb-4">No se encontraron imágenes</h3>
+            <p className="font-body text-[#7A7A7A]">Actualmente estamos actualizando nuestra galería. Por favor, vuelve más tarde.</p>
           </motion.div>
         )}
       </section>

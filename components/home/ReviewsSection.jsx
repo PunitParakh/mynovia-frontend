@@ -6,10 +6,10 @@ export default function ReviewsSection({ data, reviews = [] }) {
   const content = data || {}
   
   const displayReviews = reviews.length > 0 ? reviews : [
-    { id: 1, author_name: 'Maria Garcia', rating: 5, review_text: 'A wonderful experience. I found the dress of my dreams on the first visit. The team is incredibly friendly and professional.' },
-    { id: 2, author_name: 'Ana Lopez', rating: 5, review_text: 'My Novia has the best selection of dresses. I felt like a princess trying on every dress.' },
-    { id: 3, author_name: 'Carmen Ruiz', rating: 5, review_text: 'Thank you My Novia for making my wedding magical. The dress was perfect and the service exceptional.' },
-    { id: 4, author_name: 'Laura Sanchez', rating: 5, review_text: 'Beautiful boutique! The staff made me feel so special and they had exactly what I was looking for.' }
+    { id: 1, author_name: 'Maria Garcia', rating: 5, review_text: 'Una experiencia maravillosa. Encontré el vestido de mis sueños en la primera visita. El equipo es increíblemente amable y profesional.' },
+    { id: 2, author_name: 'Ana Lopez', rating: 5, review_text: 'My Novia tiene la mejor selección de vestidos. Me sentí como una princesa probándome cada vestido.' },
+    { id: 3, author_name: 'Carmen Ruiz', rating: 5, review_text: 'Gracias My Novia por hacer mi boda mágica. El vestido fue perfecto y el servicio excepcional.' },
+    { id: 4, author_name: 'Laura Sanchez', rating: 5, review_text: '¡Boutique preciosa! El personal me hizo sentir muy especial y tenían exactamente lo que buscaba.' }
   ]
 
   const carouselRef = useRef(null)
@@ -59,20 +59,20 @@ export default function ReviewsSection({ data, reviews = [] }) {
   }
 
   return (
-    <section className="py-24 px-6 bg-blush overflow-hidden relative">
+    <section className="py-10 px-6 bg-blush overflow-hidden relative">
       <div className="max-w-7xl mx-auto">
         <motion.div 
            initial={{ opacity: 0, y: 30 }}
            whileInView={{ opacity: 1, y: 0 }}
            viewport={{ once: true, margin: "-100px" }}
            transition={{ duration: 0.8 }}
-           className="text-center mb-12 flex flex-col items-center"
+           className="text-center mb-6 flex flex-col items-center"
         >
           <span className="text-[10px] font-sans tracking-[3px] text-body-gray uppercase mb-3 block">
-            {content.eyebrow || 'TESTIMONIALS'}
+            {content.eyebrow || 'TESTIMONIOS'}
           </span>
-          <h2 className="font-heading text-4xl lg:text-5xl font-light text-charcoal mb-8">
-            {content.heading || <>What our <em>brides</em> say</>}
+          <h2 className="font-heading text-4xl lg:text-5xl font-light text-charcoal mb-4">
+            {content.heading || <>Lo que dicen nuestras <em>novias</em></>}
           </h2>
           
           <div className="flex gap-4">

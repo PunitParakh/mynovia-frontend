@@ -20,7 +20,7 @@ export default function PrivacyPage() {
         {/* Header */}
         <div className="mb-16 md:mb-24 flex flex-col items-center text-center">
           <h1 className="font-heading text-5xl md:text-7xl text-charcoal font-light tracking-tight mb-6">
-            Privacy Policy
+            Política de Privacidad
           </h1>
           <div className="w-24 h-[1px] bg-gold"></div>
         </div>

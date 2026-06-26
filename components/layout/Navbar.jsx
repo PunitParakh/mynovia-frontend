@@ -96,9 +96,9 @@ export default function Navbar() {
   const hoverColor = (isTransparent && !scrolled) ? 'hover:text-white/70' : 'hover:text-gold'
 
   const navLinksRight = [
-    { label: 'GALLERY', href: '/gallery' },
-    { label: 'OUR STORY', href: '/about' },
-    { label: 'CONTACT', href: '/contact' }
+    { label: 'GALERÍA', href: '/gallery' },
+    { label: 'NUESTRA HISTORIA', href: '/about' },
+    { label: 'CONTACTO', href: '/contact' }
   ]
 
   return (
@@ -109,7 +109,7 @@ export default function Navbar() {
             <div className="hidden lg:flex flex-1 items-center gap-8">
               {/* OUR STORY Link */}
               <Link href="/about" className={`text-[11px] font-sans font-medium tracking-[2.5px] uppercase transition-all duration-300 ${textColor} ${hoverColor}`}>
-                OUR STORY
+                NUESTRA HISTORIA
               </Link>
 
               {/* Dresses Dropdown */}
@@ -119,7 +119,7 @@ export default function Navbar() {
                 onMouseLeave={() => setDressDropdownOpen(false)}
               >
                 <Link href="/dresses" className={`text-[11px] font-sans font-medium tracking-[2.5px] uppercase transition-all duration-300 ${textColor} ${hoverColor} flex items-center gap-2 py-6`}>
-                  DRESSES
+                  VESTIDOS
                   <svg className={`w-3 h-3 transition-transform duration-300 ${dressDropdownOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
                   </svg>
@@ -146,7 +146,7 @@ export default function Navbar() {
                 onMouseLeave={() => setAccDropdownOpen(false)}
               >
                 <Link href="/accessories" className={`text-[11px] font-sans font-medium tracking-[2.5px] uppercase transition-all duration-300 ${textColor} ${hoverColor} flex items-center gap-2 py-6`}>
-                  ACCESSORIES
+                  ACCESORIOS
                   <svg className={`w-3 h-3 transition-transform duration-300 ${accDropdownOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
                   </svg>
@@ -182,7 +182,7 @@ export default function Navbar() {
             </Link>
 
             <div className="hidden lg:flex flex-1 items-center justify-end gap-8">
-              {navLinksRight.filter(link => link.label !== 'OUR STORY').map(link => (
+              {navLinksRight.filter(link => link.label !== 'NUESTRA HISTORIA').map(link => (
                 <Link key={link.href} href={link.href} className={`text-[11px] font-sans font-medium tracking-[2.5px] uppercase transition-all duration-300 ${textColor} ${hoverColor}`}>
                   {link.label}
                 </Link>
@@ -190,14 +190,14 @@ export default function Navbar() {
 
               <div className="ml-4 flex-shrink-0">
                 <Link href="/book-appointment" className={`whitespace-nowrap px-6 py-2.5 text-[10px] font-sans font-semibold tracking-[2px] uppercase transition-all duration-300 ${isTransparent ? 'bg-white text-charcoal hover:bg-transparent hover:text-white border border-white' : 'bg-charcoal text-white hover:bg-gold'}`}>
-                  BOOK AN APPOINTMENT
+                  RESERVAR CITA
                 </Link>
               </div>
             </div>
 
             <div className="lg:hidden flex items-center gap-4">
               <Link href="/book-appointment" className={`px-4 py-2 text-[9px] font-sans font-semibold tracking-[1.5px] uppercase transition-all duration-300 ${isTransparent ? 'bg-white text-charcoal' : 'bg-charcoal text-white'}`}>
-                BOOK
+                RESERVAR
               </Link>
               <button onClick={() => setMobileOpen(!mobileOpen)} className={`z-50 ${textColor}`} aria-label="Menu">
                 {mobileOpen ? <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M18 6L6 18M6 6l12 12" /></svg> : <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M3 12h18M3 6h18M3 18h18" /></svg>}
@@ -217,7 +217,7 @@ export default function Navbar() {
                 onClick={() => setDressDropdownOpen(!dressDropdownOpen)}
                 className="text-[13px] font-sans font-medium tracking-[3px] uppercase hover:text-gold transition-colors py-2 w-full text-left flex items-center justify-between"
               >
-                DRESSES
+                VESTIDOS
                 <svg className={`w-4 h-4 transition-transform duration-300 ${dressDropdownOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
                 </svg>
@@ -246,7 +246,7 @@ export default function Navbar() {
                 onClick={() => setAccDropdownOpen(!accDropdownOpen)}
                 className="text-[13px] font-sans font-medium tracking-[3px] uppercase hover:text-gold transition-colors py-2 w-full text-left flex items-center justify-between"
               >
-                ACCESSORIES
+                ACCESORIOS
                 <svg className={`w-4 h-4 transition-transform duration-300 ${accDropdownOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
                 </svg>
@@ -278,7 +278,7 @@ export default function Navbar() {
           </div>
           <div className="mt-12 flex flex-col gap-4 pb-12">
             <Link href="/book-appointment" onClick={() => setMobileOpen(false)} className="whitespace-nowrap block bg-charcoal text-white text-[11px] font-sans font-semibold tracking-[2px] uppercase py-4 text-center hover:bg-gold transition-colors">
-              BOOK AN APPOINTMENT
+              RESERVAR CITA
             </Link>
           </div>
         </div>

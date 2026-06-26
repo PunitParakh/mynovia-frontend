@@ -42,7 +42,7 @@ export default function WelcomeSection({ data, dresses = [], accessories = [] })
   const prevRight = () => setRightIndex(p => (p - 1 + slidesRight.length) % slidesRight.length)
 
   return (
-    <section ref={sectionRef} className="py-24 px-6 bg-blush border-t border-white shadow-inner overflow-hidden">
+    <section ref={sectionRef} className="py-10 px-6 bg-blush border-t border-white shadow-inner overflow-hidden">
       <motion.div style={{ opacity }} className="max-w-[1400px] mx-auto flex flex-col items-center text-center">
         <motion.span 
           initial={{ opacity: 0, y: 20 }}
@@ -51,16 +51,16 @@ export default function WelcomeSection({ data, dresses = [], accessories = [] })
           transition={{ duration: 0.6 }}
           className="text-[10px] sm:text-[11px] font-sans tracking-[3px] text-body-gray uppercase mb-4"
         >
-          {content.eyebrow || 'THE MY NOVIA FAMILY OF BRANDS'}
+          {content.eyebrow || 'LA FAMILIA DE MARCAS MY NOVIA'}
         </motion.span>
         <motion.h2 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="font-heading text-4xl lg:text-[52px] leading-tight text-charcoal mb-12 md:mb-20 font-light max-w-3xl"
+          className="font-heading text-4xl lg:text-[52px] leading-tight text-charcoal mb-6 md:mb-10 font-light max-w-3xl"
         >
-          {content.heading_start || 'Timeless, romantic, and memorable'}
+          {content.heading_start || 'Atemporal, romántico e inolvidable'}
         </motion.h2>
         
         {/* Desktop & Mobile Layout Collection */}
@@ -92,16 +92,16 @@ export default function WelcomeSection({ data, dresses = [], accessories = [] })
           >
             <span className="text-3xl mb-6">{content.cta_icon || '💍'}</span>
             <h3 className="font-heading text-2xl lg:text-3xl text-charcoal mb-4">
-              {content.cta_heading || 'Find Your Dream Dress'}
+              {content.cta_heading || 'Encuentra el Vestido de tus Sueños'}
             </h3>
             <p className="font-sans text-sm text-body-gray mb-8 leading-relaxed">
-              {content.cta_text || 'Book a private fitting session with our bridal experts. We ensure a personalized experience to find the dress that tells your unique story.'}
+              {content.cta_text || 'Reserva una sesión de prueba privada con nuestras expertas nupciales. Te garantizamos una experiencia personalizada para encontrar el vestido que cuenta tu historia única.'}
             </p>
             <Link 
               href="/agenda-tu-cita" 
               className="px-8 py-4 bg-charcoal text-white text-[10px] font-sans font-semibold tracking-[2px] uppercase hover:bg-gold transition-colors w-full sm:w-auto"
             >
-              {content.cta_btn_text || 'Book an Appointment'}
+              {content.cta_btn_text || 'Reservar Cita'}
             </Link>
           </motion.div>
 

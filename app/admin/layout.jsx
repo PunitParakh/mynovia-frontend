@@ -77,10 +77,10 @@ export default function AdminLayout({ children }) {
       <div className="flex-1 flex flex-col">
         <header className="bg-white border-b border-gray-200 px-8 py-4 flex items-center justify-between">
           <h2 className="font-sans text-sm font-medium text-charcoal">
-            Welcome, <span className="text-gold">{user?.name || 'Admin'}</span>
+            Bienvenido/a, <span className="text-gold">{user?.name || 'Admin'}</span>
           </h2>
           <button onClick={handleLogout} className="text-xs font-sans text-body-gray hover:text-red-500 transition-colors">
-            Logout
+            Cerrar sesión
           </button>
         </header>
         <main className="flex-1 p-8">

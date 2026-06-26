@@ -14,47 +14,47 @@ export default function AdminDashboard() {
     <div className="max-w-5xl mx-auto space-y-8">
       <div>
         <h1 className="text-3xl font-heading text-charcoal mb-2">
-          Welcome back, {user?.name || 'Admin'}
+          Bienvenido/a de nuevo, {user?.name || 'Admin'}
         </h1>
         <p className="text-body-gray font-sans">
-          This is your My Novia control center. Manage your collections, content, and customer interactions from here.
+          Este es tu centro de control de My Novia. Gestiona tus colecciones, contenido e interacciones con clientes desde aquí.
         </p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-4">
-        <DashboardCard 
-          title="Dresses" 
-          desc="Manage your bridal gown collection"
+        <DashboardCard
+          title="Vestidos"
+          desc="Gestiona tu colección de vestidos de novia"
           link="/admin/vestidos"
           icon="👗"
         />
-        <DashboardCard 
-          title="Accessories" 
-          desc="Manage veils, tiaras, and other accessories"
+        <DashboardCard
+          title="Accesorios"
+          desc="Gestiona velos, tiaras y otros accesorios"
           link="/admin/accesorios"
           icon="💍"
         />
-        <DashboardCard 
-          title="Content" 
-          desc="Update website text and hero images"
+        <DashboardCard
+          title="Contenido"
+          desc="Actualiza el texto del sitio e imágenes hero"
           link="/admin/contenido"
           icon="📝"
         />
-        <DashboardCard 
-          title="Reviews" 
-          desc="Manage Google Maps reviews"
+        <DashboardCard
+          title="Reseñas"
+          desc="Gestiona las reseñas de Google Maps"
           link="/admin/resenas"
           icon="⭐"
         />
-        <DashboardCard 
-          title="Messages" 
-          desc="View contact form submissions"
+        <DashboardCard
+          title="Mensajes"
+          desc="Ver los envíos del formulario de contacto"
           link="/admin/mensajes"
           icon="📬"
         />
-        <DashboardCard 
-          title="Gallery" 
-          desc="Upload and manage site media"
+        <DashboardCard
+          title="Galería"
+          desc="Subir y gestionar los medios del sitio"
           link="/admin/media"
           icon="🖼️"
         />

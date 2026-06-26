@@ -33,7 +33,7 @@ export default function ContactMessagesPage() {
   function formatDate(dateStr) {
     if (!dateStr) return '—'
     const d = new Date(dateStr)
-    return d.toLocaleDateString('en-US', {
+    return d.toLocaleDateString('es-ES', {
       year: 'numeric', month: 'short', day: 'numeric',
       hour: '2-digit', minute: '2-digit'
     })
@@ -42,12 +42,12 @@ export default function ContactMessagesPage() {
   return (
     <div>
       <div className="flex items-center justify-between mb-8">
-        <h1 className="text-2xl font-heading text-charcoal">Contact Messages</h1>
+        <h1 className="text-2xl font-heading text-charcoal">Mensajes de Contacto</h1>
         <button
           onClick={loadMessages}
           className="px-4 py-2 text-xs font-sans bg-charcoal text-white hover:bg-gold transition-colors"
         >
-          Refresh
+          Actualizar
         </button>
       </div>
 
@@ -55,7 +55,7 @@ export default function ContactMessagesPage() {
       <div className="mb-6">
         <input
           type="text"
-          placeholder="Search by name, email, phone or message..."
+          placeholder="Buscar por nombre, correo, teléfono o mensaje..."
           value={search}
           onChange={e => setSearch(e.target.value)}
           className="w-full max-w-md px-4 py-2.5 border border-gray-200 bg-white font-sans text-sm focus:outline-none focus:border-gold"
@@ -70,7 +70,7 @@ export default function ContactMessagesPage() {
       ) : filtered.length === 0 ? (
         <div className="bg-white p-12 rounded-lg border border-gray-200 text-center">
           <p className="text-body-gray font-sans text-sm">
-            {messages.length === 0 ? 'No contact messages yet.' : 'No messages match your search.'}
+            {messages.length === 0 ? 'Aún no hay mensajes de contacto.' : 'Ningún mensaje coincide con tu búsqueda.'}
           </p>
         </div>
       ) : (
@@ -79,12 +79,12 @@ export default function ContactMessagesPage() {
             <table className="w-full">
               <thead>
                 <tr className="border-b border-gray-200 bg-gray-50">
-                  <th className="px-6 py-3 text-left text-[10px] font-sans font-semibold tracking-wider uppercase text-body-gray">Name</th>
-                  <th className="px-6 py-3 text-left text-[10px] font-sans font-semibold tracking-wider uppercase text-body-gray">Email</th>
-                  <th className="px-6 py-3 text-left text-[10px] font-sans font-semibold tracking-wider uppercase text-body-gray">Phone</th>
-                  <th className="px-6 py-3 text-left text-[10px] font-sans font-semibold tracking-wider uppercase text-body-gray">Message</th>
-                  <th className="px-6 py-3 text-left text-[10px] font-sans font-semibold tracking-wider uppercase text-body-gray">Date</th>
-                  <th className="px-6 py-3 text-left text-[10px] font-sans font-semibold tracking-wider uppercase text-body-gray">Action</th>
+                  <th className="px-6 py-3 text-left text-[10px] font-sans font-semibold tracking-wider uppercase text-body-gray">Nombre</th>
+                  <th className="px-6 py-3 text-left text-[10px] font-sans font-semibold tracking-wider uppercase text-body-gray">Correo</th>
+                  <th className="px-6 py-3 text-left text-[10px] font-sans font-semibold tracking-wider uppercase text-body-gray">Teléfono</th>
+                  <th className="px-6 py-3 text-left text-[10px] font-sans font-semibold tracking-wider uppercase text-body-gray">Mensaje</th>
+                  <th className="px-6 py-3 text-left text-[10px] font-sans font-semibold tracking-wider uppercase text-body-gray">Fecha</th>
+                  <th className="px-6 py-3 text-left text-[10px] font-sans font-semibold tracking-wider uppercase text-body-gray">Acción</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100">
@@ -102,7 +102,7 @@ export default function ContactMessagesPage() {
                         onClick={() => setSelectedMsg(msg)}
                         className="text-xs font-sans text-gold hover:text-charcoal transition-colors"
                       >
-                        View
+                        Ver
                       </button>
                     </td>
                   </tr>
@@ -112,7 +112,7 @@ export default function ContactMessagesPage() {
           </div>
           <div className="px-6 py-3 border-t border-gray-200 bg-gray-50">
             <p className="text-xs font-sans text-body-gray">
-              Showing {filtered.length} of {messages.length} messages
+              Mostrando {filtered.length} de {messages.length} mensajes
             </p>
           </div>
         </div>
@@ -123,32 +123,32 @@ export default function ContactMessagesPage() {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50" onClick={() => setSelectedMsg(null)}>
           <div className="bg-white rounded-lg shadow-xl max-w-lg w-full mx-4 max-h-[80vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
             <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
-              <h3 className="font-sans text-sm font-semibold text-charcoal">Message Details</h3>
+              <h3 className="font-sans text-sm font-semibold text-charcoal">Detalles del Mensaje</h3>
               <button onClick={() => setSelectedMsg(null)} className="text-body-gray hover:text-charcoal text-lg">×</button>
             </div>
             <div className="px-6 py-6 space-y-4">
               <div>
-                <label className="block text-[10px] font-sans font-semibold tracking-wider uppercase text-body-gray mb-1">Name</label>
+                <label className="block text-[10px] font-sans font-semibold tracking-wider uppercase text-body-gray mb-1">Nombre</label>
                 <p className="text-sm font-sans text-charcoal">{selectedMsg.name}</p>
               </div>
               <div>
-                <label className="block text-[10px] font-sans font-semibold tracking-wider uppercase text-body-gray mb-1">Email</label>
+                <label className="block text-[10px] font-sans font-semibold tracking-wider uppercase text-body-gray mb-1">Correo</label>
                 <p className="text-sm font-sans text-charcoal">
                   <a href={`mailto:${selectedMsg.email}`} className="text-gold hover:underline">{selectedMsg.email}</a>
                 </p>
               </div>
               {selectedMsg.phone && (
                 <div>
-                  <label className="block text-[10px] font-sans font-semibold tracking-wider uppercase text-body-gray mb-1">Phone</label>
+                  <label className="block text-[10px] font-sans font-semibold tracking-wider uppercase text-body-gray mb-1">Teléfono</label>
                   <p className="text-sm font-sans text-charcoal">{selectedMsg.phone}</p>
                 </div>
               )}
               <div>
-                <label className="block text-[10px] font-sans font-semibold tracking-wider uppercase text-body-gray mb-1">Message</label>
+                <label className="block text-[10px] font-sans font-semibold tracking-wider uppercase text-body-gray mb-1">Mensaje</label>
                 <p className="text-sm font-sans text-charcoal whitespace-pre-wrap leading-relaxed">{selectedMsg.message}</p>
               </div>
               <div>
-                <label className="block text-[10px] font-sans font-semibold tracking-wider uppercase text-body-gray mb-1">Received</label>
+                <label className="block text-[10px] font-sans font-semibold tracking-wider uppercase text-body-gray mb-1">Recibido</label>
                 <p className="text-sm font-sans text-body-gray">{formatDate(selectedMsg.created_at)}</p>
               </div>
             </div>

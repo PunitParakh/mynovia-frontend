@@ -4,7 +4,7 @@ export default function FilterBar({ categories = [], tags = [], activeCategory, 
   return (
     <div className="flex flex-wrap items-center gap-3 py-6 border-b border-gray-200 mb-10">
       <span className="text-[11px] font-sans font-semibold tracking-[2px] text-charcoal uppercase mr-2">
-        Filter:
+        Filtrar:
       </span>
 
       <button
@@ -13,7 +13,7 @@ export default function FilterBar({ categories = [], tags = [], activeCategory, 
           !activeCategory ? 'bg-charcoal text-white border-charcoal' : 'border-gray-300 text-body-gray hover:border-gold hover:text-gold'
         }`}
       >
-        ALL
+        TODO
       </button>
 
       {categories.map(cat => (

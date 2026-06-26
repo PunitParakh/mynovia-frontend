@@ -1,7 +1,7 @@
 'use client'
 import { useRef, useState } from 'react'
 
-export default function ImageUploader({ onUpload, multiple = true, label = 'Upload Images' }) {
+export default function ImageUploader({ onUpload, multiple = true, label = 'Subir Imágenes' }) {
   const inputRef = useRef(null)
   const [error, setError] = useState('')
   const [showError, setShowError] = useState(false)
@@ -12,12 +12,12 @@ export default function ImageUploader({ onUpload, multiple = true, label = 'Uplo
   function validateFile(file) {
     // Check file size
     if (file.size > MAX_FILE_SIZE) {
-      return `File "${file.name}" is too large. Maximum size is 10MB. (Current size: ${(file.size / 1024 / 1024).toFixed(2)}MB)`
+      return `El archivo "${file.name}" es demasiado grande. El tamaño máximo es 10MB. (Tamaño actual: ${(file.size / 1024 / 1024).toFixed(2)}MB)`
     }
 
     // Check file format
     if (!ALLOWED_FORMATS.includes(file.type)) {
-      return `File "${file.name}" has invalid format. Only PNG and JPG formats are allowed.`
+      return `El archivo "${file.name}" tiene un formato no válido. Solo se permiten formatos PNG y JPG.`
     }
 
     return null
@@ -56,9 +56,9 @@ export default function ImageUploader({ onUpload, multiple = true, label = 'Uplo
           <div className="flex items-start gap-3">
             <span className="text-xl">⚠️</span>
             <div>
-              <p className="font-semibold mb-1">File upload error</p>
+              <p className="font-semibold mb-1">Error al subir el archivo</p>
               <p>{error}</p>
-              <p className="text-xs mt-2 opacity-80">Requirements: Maximum 10MB, PNG or JPG format</p>
+              <p className="text-xs mt-2 opacity-80">Requisitos: Máximo 10MB, formato PNG o JPG</p>
             </div>
           </div>
         </div>
@@ -77,8 +77,8 @@ export default function ImageUploader({ onUpload, multiple = true, label = 'Uplo
         />
         <div className="text-3xl mb-2">📸</div>
         <p className="text-sm font-sans text-body-gray">{label}</p>
-        <p className="text-xs font-sans text-body-gray/60 mt-1">Click or drag and drop</p>
-        <p className="text-xs font-sans text-body-gray/50 mt-2">Max 10MB • PNG or JPG only</p>
+        <p className="text-xs font-sans text-body-gray/60 mt-1">Haz clic o arrastra y suelta</p>
+        <p className="text-xs font-sans text-body-gray/50 mt-2">Máx. 10MB • Solo PNG o JPG</p>
       </div>
     </div>
   )

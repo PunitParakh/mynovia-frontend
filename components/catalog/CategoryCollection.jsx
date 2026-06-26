@@ -94,6 +94,9 @@ export default function CategoryCollection({ categorySlug, categoryName }) {
               className="flex items-center gap-2 px-6 py-3 border-2 border-charcoal text-charcoal font-sans font-semibold uppercase tracking-wide hover:bg-charcoal hover:text-white transition-all duration-300 text-sm"
             >
               <span>FILTER</span>
+              {selectedStyle !== null && (
+                <span className="flex items-center justify-center w-5 h-5 rounded-full bg-gold text-white text-[10px] font-bold">1</span>
+              )}
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
               </svg>
@@ -139,25 +142,25 @@ export default function CategoryCollection({ categorySlug, categoryName }) {
                 <div className="p-6">
                   {/* Style Filter Section */}
                   <div className="mb-8">
-                    <h3 className="font-sans font-semibold text-charcoal uppercase tracking-wide text-sm mb-4">Filter by Style</h3>
-                    <button
-                      onClick={() => setSelectedStyle(null)}
-                      className={`w-full text-left px-4 py-3 border-2 transition-all mb-2 text-sm font-sans ${
-                        selectedStyle === null 
-                          ? 'border-gold bg-gold text-white' 
-                          : 'border-gray-300 text-body-gray hover:border-gold'
-                      }`}
-                    >
-                      All Styles
-                    </button>
+                    <div className="flex items-center justify-between mb-4">
+                      <h3 className="font-sans font-semibold text-charcoal uppercase tracking-wide text-sm">Filter by Style</h3>
+                      {selectedStyle !== null && (
+                        <button
+                          onClick={() => { setSelectedStyle(null); setIsFilterOpen(false) }}
+                          className="text-xs font-sans text-gold underline underline-offset-2 hover:text-charcoal transition-colors"
+                        >
+                          Clear
+                        </button>
+                      )}
+                    </div>
                     <div className="space-y-2">
                       {availableStyles.map(style => (
                         <button
                           key={style.id}
-                          onClick={() => setSelectedStyle(style.id)}
+                          onClick={() => { setSelectedStyle(style.id); setIsFilterOpen(false) }}
                           className={`w-full text-left px-4 py-3 border-2 transition-all text-sm font-sans ${
-                            selectedStyle === style.id 
-                              ? 'border-gold bg-gold text-white' 
+                            selectedStyle === style.id
+                              ? 'border-gold bg-gold text-white'
                               : 'border-gray-300 text-body-gray hover:border-gold'
                           }`}
                         >
@@ -167,28 +170,6 @@ export default function CategoryCollection({ categorySlug, categoryName }) {
                     </div>
                   </div>
                 </div>
-
-                {/* Footer Buttons */}
-                <div className="fixed bottom-0 right-0 left-0 max-w-sm bg-white border-t border-gray-200 p-6 flex gap-3">
-                  <button
-                    onClick={() => {
-                      setSelectedStyle(null)
-                      setIsFilterOpen(false)
-                    }}
-                    className="flex-1 px-4 py-3 border-2 border-gray-300 text-charcoal font-sans font-semibold uppercase tracking-wide hover:bg-gray-100 transition-all text-sm"
-                  >
-                    Clear
-                  </button>
-                  <button
-                    onClick={() => setIsFilterOpen(false)}
-                    className="flex-1 px-4 py-3 bg-charcoal text-white font-sans font-semibold uppercase tracking-wide hover:bg-opacity-90 transition-all text-sm"
-                  >
-                    View ({filteredDresses.length})
-                  </button>
-                </div>
-
-                {/* Spacer for footer */}
-                <div className="h-24" />
               </motion.div>
             </>
           )}

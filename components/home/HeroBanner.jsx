@@ -7,9 +7,9 @@ export default function HeroBanner({ data }) {
   const defaultSlides = [
     {
       image: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=1920&q=80',
-      heading: 'Unique wedding dresses for every story',
-      subtext: 'Discover our exclusive collection, created for your most special moment',
-      cta_text: 'VIEW COLLECTIONS',
+      heading: 'Vestidos de novia únicos para cada historia',
+      subtext: 'Descubre nuestra colección exclusiva, creada para tu momento más especial',
+      cta_text: 'VER COLECCIONES',
       cta_link: '/dresses'
     }
   ]
@@ -98,7 +98,7 @@ export default function HeroBanner({ data }) {
               <Link 
                 href="/dresses" 
                 className="bg-white/95 text-charcoal px-8 py-4 text-[11px] font-sans font-semibold tracking-[3px] uppercase hover:bg-gold hover:text-white transition-all duration-300 shadow-xl inline-block"
-              >  {slides[current]?.cta_text || 'VIEW COLLECTIONS'}
+              >  {slides[current]?.cta_text || 'VER COLECCIONES'}
               </Link>
             </motion.div>
           </motion.div>

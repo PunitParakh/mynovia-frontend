@@ -41,22 +41,22 @@ export default function FeaturedAccessories({ data, accessories = [] }) {
         {/* Text and context left block */}
         <motion.div style={{ opacity, y: yText }} className="w-full lg:w-1/3 flex flex-col shrink-0">
           <span className="text-[10px] font-sans tracking-[3px] text-body-gray uppercase mb-4">
-            {content.eyebrow || 'MY NOVIA ACCESSORIES'}
+            {content.eyebrow || 'MY NOVIA ACCESORIOS'}
           </span>
           <h2 className="font-heading text-4xl lg:text-5xl text-charcoal mb-6 font-light italic">
-            {content.heading || 'Refined & Memorable'}
+            {content.heading || 'Refinado e Inolvidable'}
           </h2>
           <p className="font-body text-body-gray mb-12 text-sm leading-relaxed max-w-sm">
-            {content.subtext || 'For the bride who wishes to shine with her own light. With sculpted details, intricate lace, and dazzling pieces designed to complement your look from the first to the last dance.'}
+            {content.subtext || 'Para la novia que desea brillar con su propia luz. Con detalles esculpidos, encajes intrincados y piezas deslumbrantes diseñadas para complementar tu look desde el primer hasta el último baile.'}
           </p>
           
           <div className="flex items-center gap-6">
             <button onClick={scrollLeft} className="text-[10px] font-sans font-medium tracking-[2px] text-charcoal/50 hover:text-charcoal transition-colors uppercase flex items-center gap-2">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1"><path d="M15 18l-6-6 6-6"/></svg>
-              PREV
+              ANTERIOR
             </button>
             <button onClick={scrollRight} className="text-[10px] font-sans font-medium tracking-[2px] text-charcoal/50 hover:text-charcoal transition-colors uppercase flex items-center gap-2">
-              NEXT
+              SIGUIENTE
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1"><path d="M9 18l6-6-6-6"/></svg>
             </button>
           </div>

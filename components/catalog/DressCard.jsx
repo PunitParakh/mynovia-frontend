@@ -25,11 +25,11 @@ export default function DressCard({ dress }) {
 
           {dress.is_available && dress.inventory_count > 0 ? (
             <span className="absolute bottom-4 right-4 bg-white/90 text-[9px] font-sans font-semibold tracking-wider text-green-700 px-3 py-1.5 uppercase shadow-sm">
-              In stock
+              En stock
             </span>
           ) : (
             <span className="absolute bottom-4 right-4 bg-white/90 text-[9px] font-sans font-semibold tracking-wider text-gold px-3 py-1.5 uppercase shadow-sm">
-              On request
+              Disponible bajo pedido
             </span>
           )}
         </div>
@@ -45,7 +45,7 @@ export default function DressCard({ dress }) {
         </div>
         
         <p className="font-sans text-[13px] leading-relaxed text-[#7a7a7a] font-light mb-3 line-clamp-2">
-          {dress.description || "Elegant and timeless, this beautiful gown features meticulous craftsmanship and premium fabrics designed to make your special day unforgettable. With delicate lace appliques, hand-beaded details, and a flowing skirt, it moves gracefully with every step."}
+          {dress.description || "Elegante y atemporal, este hermoso vestido cuenta con una artesanía meticulosa y tejidos premium diseñados para hacer tu día especial inolvidable. Con delicados apliques de encaje, detalles bordados a mano y una falda fluida, se mueve con gracia en cada paso."}
         </p>
         
       </div>

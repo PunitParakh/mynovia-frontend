@@ -3,15 +3,15 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
 const links = [
-  { href: '/admin', label: 'Dashboard', icon: '📊' },
-  { href: '/admin/vestidos', label: 'Dresses', icon: '👗' },
-  { href: '/admin/accesorios', label: 'Accessories', icon: '💍' },
-  { href: '/admin/categorias', label: 'Categories', icon: '📂' },
-  { href: '/admin/atributos', label: 'Attributes', icon: '🎨' },
-  { href: '/admin/contenido', label: 'Content', icon: '📝' },
-  { href: '/admin/resenas', label: 'Reviews', icon: '⭐' },
-  { href: '/admin/mensajes', label: 'Contact Messages', icon: '📬' },
-  { href: '/admin/media', label: 'Gallery', icon: '🖼️' }
+  { href: '/admin', label: 'Panel de Control', icon: '📊' },
+  { href: '/admin/vestidos', label: 'Vestidos', icon: '👗' },
+  { href: '/admin/accesorios', label: 'Accesorios', icon: '💍' },
+  { href: '/admin/categorias', label: 'Categorías', icon: '📂' },
+  { href: '/admin/atributos', label: 'Atributos', icon: '🎨' },
+  { href: '/admin/contenido', label: 'Contenido', icon: '📝' },
+  { href: '/admin/resenas', label: 'Reseñas', icon: '⭐' },
+  { href: '/admin/mensajes', label: 'Mensajes de Contacto', icon: '📬' },
+  { href: '/admin/media', label: 'Galería', icon: '🖼️' }
 ]
 
 export default function Sidebar() {
@@ -22,7 +22,7 @@ export default function Sidebar() {
       <div className="p-6 border-b border-white/10">
         <Link href="/admin">
           <h2 className="font-heading text-xl tracking-[3px] uppercase">My Novia</h2>
-          <span className="text-[10px] font-sans tracking-widest text-white/40 uppercase">Admin</span>
+          <span className="text-[10px] font-sans tracking-widest text-white/40 uppercase">Administrador</span>
         </Link>
       </div>
 
@@ -46,7 +46,7 @@ export default function Sidebar() {
 
       <div className="p-6 border-t border-white/10">
         <Link href="/" className="text-xs font-sans text-white/40 hover:text-white transition-colors">
-          ← View website
+          ← Ver sitio web
         </Link>
       </div>
     </aside>

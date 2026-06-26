@@ -4,12 +4,12 @@ import Link from 'next/link'
 import { fetchCategories, fetchSections } from '@/lib/api'
 
 const footerLinks = [
-  { label: 'Dresses', href: '/dresses' },
-  { label: 'Accessories', href: '/accessories' },
-  { label: 'Gallery', href: '/gallery' },
-  { label: 'Our Story', href: '/about' },
-  { label: 'Contact', href: '/contact' },
-  { label: 'Book Appointment', href: '/book-appointment' }
+  { label: 'Vestidos', href: '/dresses' },
+  { label: 'Accesorios', href: '/accessories' },
+  { label: 'Galería', href: '/gallery' },
+  { label: 'Nuestra Historia', href: '/about' },
+  { label: 'Contacto', href: '/contact' },
+  { label: 'Reservar Cita', href: '/book-appointment' }
 ]
 
 export default function Footer() {
@@ -50,7 +50,7 @@ export default function Footer() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-12">
           <div>
             <h4 className="font-sans text-[10px] font-semibold tracking-[2px] uppercase text-charcoal/80 mb-6">
-              Our Collections
+              Nuestras Colecciones
             </h4>
             <ul className="space-y-4">
               {collections.map(cat => (
@@ -65,7 +65,7 @@ export default function Footer() {
 
           <div>
             <h4 className="font-sans text-[10px] font-semibold tracking-[2px] uppercase text-charcoal/80 mb-6">
-              Information
+              Información
             </h4>
             <ul className="space-y-4">
               {footerLinks.map(link => (
@@ -80,7 +80,7 @@ export default function Footer() {
 
           <div>
             <h4 className="font-sans text-[10px] font-semibold tracking-[2px] uppercase text-charcoal/80 mb-6">
-              Contact
+              Contacto
             </h4>
             <div className="space-y-4 text-[13px] text-body-gray font-body">
               <p>📍 Almería, Spain</p>
@@ -91,7 +91,7 @@ export default function Footer() {
 
           <div>
              <h4 className="font-sans text-[10px] font-semibold tracking-[2px] uppercase text-charcoal/80 mb-6">
-              Social Connection
+              Redes Sociales
             </h4>
             <div className="flex gap-4">
               <a href="https://www.facebook.com/profile.php?id=100083262854501" target="_blank" rel="noopener noreferrer" className="text-body-gray hover:text-charcoal transition-colors" aria-label="Facebook">
@@ -120,14 +120,14 @@ export default function Footer() {
 
         <div className="flex flex-col md:flex-row justify-between items-center mt-20 pt-8 border-t border-gray-200">
            <div className="flex flex-wrap gap-4 justify-center md:justify-start">
-               <Link href="/privacy" className="text-[10px] text-body-gray hover:text-charcoal font-sans uppercase">Privacy Policy</Link>
+               <Link href="/privacy" className="text-[10px] text-body-gray hover:text-charcoal font-sans uppercase">Política de Privacidad</Link>
                <span className="text-body-gray hidden md:inline">|</span>
-               <Link href="/terms" className="text-[10px] text-body-gray hover:text-charcoal font-sans uppercase">Terms of Service</Link>
+               <Link href="/terms" className="text-[10px] text-body-gray hover:text-charcoal font-sans uppercase">Términos de Servicio</Link>
                <span className="text-body-gray hidden md:inline">|</span>
-               <Link href="/cookies" className="text-[10px] text-body-gray hover:text-charcoal font-sans uppercase">Cookies Policy</Link>
+               <Link href="/cookies" className="text-[10px] text-body-gray hover:text-charcoal font-sans uppercase">Política de Cookies</Link>
            </div>
           <p className="text-[10px] text-body-gray font-sans mt-4 md:mt-0 uppercase">
-            © {new Date().getFullYear()} My Novia. All rights reserved.
+            © {new Date().getFullYear()} My Novia. Todos los derechos reservados.
           </p>
         </div>
       </div>

@@ -83,15 +83,15 @@ export default function CategoriesPage() {
   }
 
   const handleDelete = async (id) => {
-    if (!confirm('Are you sure you want to delete this category?')) return
+    if (!confirm('¿Estás seguro de que quieres eliminar esta categoría?')) return
     try {
       setSaving(true)
       await adminDeleteCategory(id)
-      setSavedMessage('Category deleted successfully!')
+      setSavedMessage('¡Categoría eliminada con éxito!')
       setTimeout(() => setSavedMessage(''), 3000)
       loadCategories()
     } catch (err) {
-      alert('Error deleting category: ' + (err.response?.data?.error || err.message))
+      alert('Error al eliminar la categoría: ' + (err.response?.data?.error || err.message))
     } finally {
       setSaving(false)
     }
@@ -112,10 +112,10 @@ export default function CategoriesPage() {
 
       if (isCreating) {
         await adminCreateCategory(fd)
-        setSavedMessage('Category created successfully!')
+        setSavedMessage('¡Categoría creada con éxito!')
       } else {
         await adminUpdateCategory(editingId, fd)
-        setSavedMessage('Category updated successfully!')
+        setSavedMessage('¡Categoría actualizada con éxito!')
       }
       
       setTimeout(() => setSavedMessage(''), 3000)
@@ -125,7 +125,7 @@ export default function CategoriesPage() {
     } catch (err) {
       console.error('Error saving category:', err)
       const msg = err.response?.data?.error || err.message || 'Unknown error'
-      alert(`Error saving category: ${msg}`)
+      alert(`Error al guardar la categoría: ${msg}`)
     } finally {
       setSaving(false)
     }
@@ -158,10 +158,10 @@ export default function CategoriesPage() {
       }
       await adminUpdateSection('categories_order', newOrderMap)
       setOrderMap(newOrderMap)
-      setSavedMessage('Order saved successfully!')
+      setSavedMessage('¡Orden guardado con éxito!')
       setTimeout(() => setSavedMessage(''), 3000)
     } catch (err) {
-      alert('Error saving order: ' + err.message)
+      alert('Error al guardar el orden: ' + err.message)
     } finally {
       setSaving(false)
     }
@@ -170,12 +170,12 @@ export default function CategoriesPage() {
   return (
     <div className="max-w-4xl">
       <div className="flex items-center justify-between mb-8">
-        <h1 className="text-2xl font-heading text-charcoal">Manage Categories</h1>
+        <h1 className="text-2xl font-heading text-charcoal">Gestionar Categorías</h1>
         <button 
           onClick={handleCreateNew}
           className="btn-gold text-[10px]"
         >
-          + ADD CATEGORY
+          + AÑADIR CATEGORÍA
         </button>
       </div>
       
@@ -192,7 +192,7 @@ export default function CategoriesPage() {
             activeTab === 'dress' ? 'border-gold text-gold' : 'border-transparent text-body-gray hover:text-charcoal'
           }`}
         >
-          Dresses
+          Vestidos
         </button>
         <button
           onClick={() => setActiveTab('accessory')}
@@ -200,28 +200,28 @@ export default function CategoriesPage() {
             activeTab === 'accessory' ? 'border-gold text-gold' : 'border-transparent text-body-gray hover:text-charcoal'
           }`}
         >
-          Accessories
+          Accesorios
         </button>
       </div>
 
       <div className="flex justify-between items-center mb-4">
-        <h2 className="font-sans text-sm text-charcoal">Use the arrows to reorder categories, then click Save Order.</h2>
+        <h2 className="font-sans text-sm text-charcoal">Usa las flechas para reordenar las categorías, luego haz clic en Guardar Orden.</h2>
         <button onClick={saveOrder} disabled={saving || categories.length === 0} className="btn-gold disabled:opacity-50 text-[10px]">
-          SAVE ORDER
+          GUARDAR ORDEN
         </button>
       </div>
 
       {loading ? (
-        <div className="p-8 text-center font-sans">Loading categories...</div>
+        <div className="p-8 text-center font-sans">Cargando categorías...</div>
       ) : (
         <div className="space-y-6">
           {(isCreating || editingId) && (
             <div className="bg-white border text-charcoal border-gold p-6 shadow-sm mb-6">
-              <h2 className="text-lg font-heading mb-4">{isCreating ? 'Create New Category' : 'Edit Category'}</h2>
+              <h2 className="text-lg font-heading mb-4">{isCreating ? 'Crear Nueva Categoría' : 'Editar Categoría'}</h2>
               <div className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   <div>
-                    <label className="block text-xs font-sans font-semibold tracking-wider uppercase mb-2">Category Name</label>
+                    <label className="block text-xs font-sans font-semibold tracking-wider uppercase mb-2">Nombre de Categoría</label>
                     <input
                       type="text"
                       value={editData.name || ''}
@@ -235,25 +235,25 @@ export default function CategoriesPage() {
                       type="text"
                       value={editData.slug || ''}
                       onChange={(e) => setEditData({ ...editData, slug: e.target.value })}
-                      placeholder="Leave blank to auto-generate"
+                      placeholder="Dejar en blanco para generar automáticamente"
                       className="w-full px-4 py-2.5 border border-gray-200 bg-white font-sans text-sm focus:outline-none focus:border-gold"
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-sans font-semibold tracking-wider uppercase mb-2">Type</label>
+                    <label className="block text-xs font-sans font-semibold tracking-wider uppercase mb-2">Tipo</label>
                     <select
                       value={editData.type || 'dress'}
                       onChange={(e) => setEditData({ ...editData, type: e.target.value })}
                       className="w-full px-4 py-2.5 border border-gray-200 bg-white font-sans text-sm focus:outline-none focus:border-gold"
                     >
-                      <option value="dress">Dresses</option>
-                      <option value="accessory">Accessories</option>
+                      <option value="dress">Vestidos</option>
+                      <option value="accessory">Accesorios</option>
                     </select>
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-sans font-semibold tracking-wider uppercase mb-2">Category Image</label>
+                  <label className="block text-xs font-sans font-semibold tracking-wider uppercase mb-2">Imagen de Categoría</label>
                   {(editData.image_url || newImage) && (
                     <div className="mb-4 w-40 h-40 bg-cream overflow-hidden border border-gray-100">
                       <img 
@@ -263,7 +263,7 @@ export default function CategoriesPage() {
                       />
                     </div>
                   )}
-                  <ImageUploader onUpload={files => setNewImage(files[0])} label={editData.image_url || newImage ? 'Change Image' : 'Upload Image'} />
+                  <ImageUploader onUpload={files => setNewImage(files[0])} label={editData.image_url || newImage ? 'Cambiar Imagen' : 'Subir Imagen'} />
                 </div>
 
                 <div className="flex gap-4 pt-4 border-t border-gray-100">
@@ -272,13 +272,13 @@ export default function CategoriesPage() {
                     disabled={saving || !editData.name}
                     className="btn-gold-filled disabled:opacity-50"
                   >
-                    {saving ? 'SAVING...' : 'SAVE CATEGORY'}
+                    {saving ? 'GUARDANDO...' : 'GUARDAR CATEGORÍA'}
                   </button>
                   <button
                     onClick={handleCancel}
                     className="btn-gold"
                   >
-                    CANCEL
+                    CANCELAR
                   </button>
                 </div>
               </div>
@@ -296,13 +296,13 @@ export default function CategoriesPage() {
                   {category.image_url ? (
                     <img src={category.image_url} alt="" className="w-full h-full object-cover" />
                   ) : (
-                    <div className="w-full h-full flex items-center justify-center text-xs text-body-gray italic font-sans px-2 text-center">No image</div>
+                    <div className="w-full h-full flex items-center justify-center text-xs text-body-gray italic font-sans px-2 text-center">Sin imagen</div>
                   )}
                 </div>
                 <div>
                   <h2 className="text-xl font-heading text-charcoal mb-1">{category.name}</h2>
                   <p className="text-xs text-body-gray font-sans tracking-wide">SLUG: {category.slug}</p>
-                  <p className="text-xs text-gold font-sans tracking-wide mt-1">TYPE: {category.type === 'accessory' ? 'ACCESSORIES' : 'DRESSES'}</p>
+                  <p className="text-xs text-gold font-sans tracking-wide mt-1">TIPO: {category.type === 'accessory' ? 'ACCESORIOS' : 'VESTIDOS'}</p>
                 </div>
               </div>
               <div className="flex flex-col gap-2 border-l border-gray-100 pl-6">
@@ -310,13 +310,13 @@ export default function CategoriesPage() {
                   onClick={() => handleEdit(category)}
                   className="text-[10px] font-sans font-semibold tracking-wider text-charcoal hover:text-gold uppercase text-right"
                 >
-                  Edit
+                  Editar
                 </button>
                 <button
                   onClick={() => handleDelete(category.id)}
                   className="text-[10px] font-sans font-semibold tracking-wider text-red-500 hover:text-red-700 uppercase text-right"
                 >
-                  Delete
+                  Eliminar
                 </button>
               </div>
             </div>
@@ -324,7 +324,7 @@ export default function CategoriesPage() {
 
           {categories.length === 0 && !isCreating && !editingId && (
             <div className="p-8 text-center border border-dashed border-gray-300">
-              <p className="text-sm font-sans text-body-gray">No categories found in this section.</p>
+              <p className="text-sm font-sans text-body-gray">No se encontraron categorías en esta sección.</p>
             </div>
           )}
         </div>

@@ -25,14 +25,14 @@ export async function generateMetadata({ params }) {
        const cat = cats.find(c => c.slug === params.slug)
        if (cat) {
          return {
-           title: `${cat.name} Dresses | My Novia`,
-           description: `Explore our collection of ${cat.name} dresses.`
+           title: `Vestidos ${cat.name} | My Novia`,
+           description: `Explora nuestra colección de vestidos ${cat.name}.`
          }
        }
      }
   } catch {}
 
-  return { title: 'Dress — My Novia' }
+  return { title: 'Vestido — My Novia' }
 }
 
 async function getDress(slug) {
@@ -67,15 +67,15 @@ export default async function DressDetailPage({ params }) {
           categorySlug={category.slug}
           categoryName={category.name}
           coverImage={category.image_url || "https://images.unsplash.com/photo-1594463750939-ebb28c3f7f75?w=800&q=80"}
-          description={category.description || `Explore our latest collection of ${category.name} dresses.`}
+          description={category.description || `Explora nuestra última colección de vestidos ${category.name}.`}
         />
       )
     }
 
     return (
       <div className="max-w-7xl mx-auto px-6 py-20 text-center">
-        <h1 className="section-heading mb-4">Dress or Category not found</h1>
-        <Link href="/dresses" className="btn-gold">View Collection</Link>
+        <h1 className="section-heading mb-4">Vestido o categoría no encontrado</h1>
+        <Link href="/dresses" className="btn-gold">Ver Colección</Link>
       </div>
     )
   }
@@ -117,11 +117,11 @@ export default async function DressDetailPage({ params }) {
           <DressVariantSelector dress={dress} variants={variants} />
 
           <Link href="/book-appointment" className="btn-gold-filled w-full text-center block">
-             BOOK AN APPOINTMENT
+             RESERVAR CITA
           </Link>
 
           <p className="text-xs text-body-gray font-sans mt-4 text-center">
-            Visit us to try on this dress with personalized attention
+            Visítanos para probarte este vestido con atención personalizada
           </p>
         </div>
       </div>

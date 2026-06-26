@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import {
-  adminCreateDress, adminUploadDressImage, fetchCategories, fetchTags,
+  adminCreateDress, adminUploadDressImage, fetchCategories, fetchEtiquetas,
   adminGetStyles, adminGetSizes, adminGetColors, adminSaveDressVariants
 } from '@/lib/api'
 import ImageUploader from '@/components/admin/ImageUploader'
@@ -11,7 +11,7 @@ import LoadingOverlay from '@/components/admin/LoadingOverlay'
 export default function NewDressPage() {
   const router = useRouter()
   const [categories, setCategories] = useState([])
-  const [tags, setTags] = useState([])
+  const [tags, setEtiquetas] = useState([])
   const [saving, setSaving] = useState(false)
   const [images, setImages] = useState([])
 
@@ -38,7 +38,7 @@ export default function NewDressPage() {
 
   useEffect(() => {
     fetchCategories('dress').then(setCategories).catch(() => {})
-    fetchTags().then(setTags).catch(() => {})
+    fetchEtiquetas().then(setEtiquetas).catch(() => {})
     Promise.all([adminGetStyles(), adminGetSizes(), adminGetColors()])
       .then(([st, si, co]) => {
         setAllStyles(st || [])
@@ -93,7 +93,7 @@ export default function NewDressPage() {
     const newVariants = []
 
     if (selectedStyles.length === 0 && selectedSizes.length === 0 && selectedColors.length === 0) {
-      if(confirm('No attributes selected. Clear all variants?')) setVariants([])
+      if(confirm('No hay atributos seleccionados. ¿Limpiar todas las variantes?')) setVariants([])
       return
     }
 
@@ -151,7 +151,7 @@ export default function NewDressPage() {
           })))
         } catch (err) {
           console.error("Failed saving variants", err)
-          alert('Dress created but there was an error saving variants.')
+          alert('Vestido creado pero hubo un error al guardar las variantes.')
         }
       }
 
@@ -162,28 +162,28 @@ export default function NewDressPage() {
       router.push('/admin/vestidos')
     } catch (err) {
       console.error('Dress creation error:', err)
-      alert(err.response?.data?.error || err.message || 'Error creating dress')
+      alert(err.response?.data?.error || err.message || 'Error al crear el vestido')
     }
     setSaving(false)
   }
 
   return (
     <div className="max-w-4xl pb-20">
-      <LoadingOverlay isLoading={saving} message="Saving Dress & Uploading Images..." />
-      <h1 className="text-2xl font-heading text-charcoal mb-8">New Dress</h1>
+      <LoadingOverlay isLoading={saving} message="Guardando Vestido y Subiendo Imágenes..." />
+      <h1 className="text-2xl font-heading text-charcoal mb-8">Nuevo Vestido</h1>
 
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="bg-white p-6 rounded-lg border border-gray-200">
-          <h2 className="text-lg font-heading text-charcoal mb-6 border-b pb-2">Basic Details</h2>
+          <h2 className="text-lg font-heading text-charcoal mb-6 border-b pb-2">Detalles Básicos</h2>
           <div className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label className="block text-xs font-sans font-semibold tracking-wider text-charcoal uppercase mb-2">Name *</label>
+                <label className="block text-xs font-sans font-semibold tracking-wider text-charcoal uppercase mb-2">Nombre *</label>
                 <input type="text" value={form.name} onChange={e => update('name', e.target.value)} required
                   className="w-full px-4 py-2.5 border border-gray-200 bg-white font-sans text-sm focus:outline-none focus:border-gold" />
               </div>
               <div>
-                <label className="block text-xs font-sans font-semibold tracking-wider text-charcoal uppercase mb-2">Category</label>
+                <label className="block text-xs font-sans font-semibold tracking-wider text-charcoal uppercase mb-2">Categoría</label>
                 <select value={form.category_id} onChange={e => update('category_id', e.target.value)}
                   className="w-full px-4 py-2.5 border border-gray-200 bg-white font-sans text-sm focus:outline-none focus:border-gold">
                   <option value="">Select...</option>
@@ -193,24 +193,24 @@ export default function NewDressPage() {
             </div>
 
             <div>
-                <label className="block text-xs font-sans font-semibold tracking-wider text-charcoal uppercase mb-2">Description</label>
+                <label className="block text-xs font-sans font-semibold tracking-wider text-charcoal uppercase mb-2">Descripción</label>
               <textarea value={form.description} onChange={e => update('description', e.target.value)} rows={4}
                 className="w-full px-4 py-3 border border-gray-200 bg-white font-sans text-sm focus:outline-none focus:border-gold resize-y" />
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div>
-                <label className="block text-xs font-sans font-semibold tracking-wider text-charcoal uppercase mb-2">Base Price</label>
+                <label className="block text-xs font-sans font-semibold tracking-wider text-charcoal uppercase mb-2">Precio Base</label>
                 <input type="number" step="0.01" min="0" onKeyDown={(e) => ["e", "E", "+", "-"].includes(e.key) && e.preventDefault()} value={form.price} onChange={e => update('price', e.target.value)}
                   className="w-full px-4 py-2.5 border border-gray-200 bg-white font-sans text-sm focus:outline-none focus:border-gold [&::-webkit-inner-spin-button]:appearance-none" />
               </div>
               <div>
-                <label className="block text-xs font-sans font-semibold tracking-wider text-charcoal uppercase mb-2">Total Stock (Fallback)</label>
+                <label className="block text-xs font-sans font-semibold tracking-wider text-charcoal uppercase mb-2">Stock Total (Alternativo)</label>
                 <input type="number" min="0" onKeyDown={(e) => ["e", "E", "+", "-"].includes(e.key) && e.preventDefault()} readOnly={variants.length > 0} value={variants.length > 0 ? variants.reduce((sum, v) => sum + (parseInt(v.stock) || 0), 0) : form.inventory_count} onChange={e => update('inventory_count', parseInt(e.target.value) || 0)}
                   className="w-full px-4 py-2.5 border border-gray-200 bg-white font-sans text-sm focus:outline-none focus:border-gold [&::-webkit-inner-spin-button]:appearance-none" />
               </div>
               <div>
-                <label className="block text-xs font-sans font-semibold tracking-wider text-charcoal uppercase mb-2">Delivery Days</label>
+                <label className="block text-xs font-sans font-semibold tracking-wider text-charcoal uppercase mb-2">Días de Entrega</label>
                 <input type="number" min="0" onKeyDown={(e) => ["e", "E", "+", "-"].includes(e.key) && e.preventDefault()} value={form.delivery_time_days} onChange={e => update('delivery_time_days', e.target.value)}
                   className="w-full px-4 py-2.5 border border-gray-200 bg-white font-sans text-sm focus:outline-none focus:border-gold [&::-webkit-inner-spin-button]:appearance-none" />
               </div>
@@ -218,7 +218,7 @@ export default function NewDressPage() {
 
             {tags.length > 0 && (
               <div>
-                <label className="block text-xs font-sans font-semibold tracking-wider text-charcoal uppercase mb-2">Tags</label>
+                <label className="block text-xs font-sans font-semibold tracking-wider text-charcoal uppercase mb-2">Etiquetas</label>
                 <div className="flex flex-wrap gap-2">
                   {tags.map(tag => (
                     <button key={tag.id} type="button" onClick={() => toggleTag(tag.id)}
@@ -235,24 +235,24 @@ export default function NewDressPage() {
             <div className="flex gap-6">
               <label className="flex items-center gap-2 cursor-pointer">
                 <input type="checkbox" checked={form.featured} onChange={e => update('featured', e.target.checked)} className="accent-gold" />
-                <span className="text-sm font-sans text-charcoal">Featured</span>
+                <span className="text-sm font-sans text-charcoal">Destacado</span>
               </label>
               <label className="flex items-center gap-2 cursor-pointer">
                 <input type="checkbox" checked={form.is_published} onChange={e => update('is_published', e.target.checked)} className="accent-gold" />
-                <span className="text-sm font-sans text-charcoal">Publish</span>
+                <span className="text-sm font-sans text-charcoal">Publicar</span>
               </label>
             </div>
 
             <div className="border-t border-gray-100 pt-6">
               <label className="block text-xs font-sans font-semibold tracking-wider text-charcoal uppercase mb-2">
-                Display Order
-                <span className="ml-2 font-normal normal-case text-body-gray">(Lower number = appears first in lists)</span>
+                Orden de Visualización
+                <span className="ml-2 font-normal normal-case text-body-gray">(Número menor = aparece primero en las listas)</span>
               </label>
               <input
                 type="number"
                 min="1"
                 value={form.display_order || ''}
-                placeholder="Leave blank for default order"
+                placeholder="Dejar en blanco para orden por defecto"
                 onChange={e => update('display_order', e.target.value ? parseInt(e.target.value) : null)}
                 className="w-48 px-4 py-2.5 border border-gray-200 bg-white font-sans text-sm focus:outline-none focus:border-gold"
               />
@@ -262,19 +262,19 @@ export default function NewDressPage() {
 
         {/* VARIANTS SECTION */}
         <div className="bg-white p-6 rounded-lg border border-gray-200">
-          <h2 className="text-lg font-heading text-charcoal mb-4 border-b pb-2">Variants (Style / Size / Color)</h2>
+          <h2 className="text-lg font-heading text-charcoal mb-4 border-b pb-2">Variantes (Estilo / Talla / Color)</h2>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
             {/* Styles */}
             <div>
               <div className="flex items-center justify-between gap-2 mb-2">
-                <p className="text-xs font-sans font-semibold tracking-wider text-charcoal uppercase">Select Styles</p>
+                <p className="text-xs font-sans font-semibold tracking-wider text-charcoal uppercase">Seleccionar Estilos</p>
                 <button type="button" onClick={toggleAllStyles} className="px-3 py-1 bg-gold text-white text-xs rounded font-sans font-semibold hover:bg-opacity-90 transition">
-                  {selectedStyles.length === allStyles.length && allStyles.length > 0 ? 'Clear All' : 'Select All'}
+                  {selectedStyles.length === allStyles.length && allStyles.length > 0 ? 'Limpiar Todo' : 'Seleccionar Todo'}
                 </button>
               </div>
               <div className="border border-gray-200 rounded p-3 h-40 overflow-y-auto space-y-2">
-                {allStyles.length === 0 ? <p className="text-xs text-body-gray italic">No styles available</p> : allStyles.map(s => (
+                {allStyles.length === 0 ? <p className="text-xs text-body-gray italic">No hay estilos disponibles</p> : allStyles.map(s => (
                   <label key={s.id} className="flex items-center gap-2 cursor-pointer">
                     <input type="checkbox" checked={selectedStyles.includes(s.id)} onChange={() => toggleSelection(setSelectedStyles, s.id)} className="accent-gold" />
                     <span className="text-sm font-sans">{s.name}</span>
@@ -285,13 +285,13 @@ export default function NewDressPage() {
             {/* Sizes */}
             <div>
               <div className="flex items-center justify-between gap-2 mb-2">
-                <p className="text-xs font-sans font-semibold tracking-wider text-charcoal uppercase">Select Sizes</p>
+                <p className="text-xs font-sans font-semibold tracking-wider text-charcoal uppercase">Seleccionar Tallas</p>
                 <button type="button" onClick={toggleAllSizes} className="px-3 py-1 bg-gold text-white text-xs rounded font-sans font-semibold hover:bg-opacity-90 transition">
-                  {selectedSizes.length === allSizes.length && allSizes.length > 0 ? 'Clear All' : 'Select All'}
+                  {selectedSizes.length === allSizes.length && allSizes.length > 0 ? 'Limpiar Todo' : 'Seleccionar Todo'}
                 </button>
               </div>
               <div className="border border-gray-200 rounded p-3 h-40 overflow-y-auto space-y-2">
-                {allSizes.length === 0 ? <p className="text-xs text-body-gray italic">No sizes available</p> : allSizes.map(s => (
+                {allSizes.length === 0 ? <p className="text-xs text-body-gray italic">No hay tallas disponibles</p> : allSizes.map(s => (
                   <label key={s.id} className="flex items-center gap-2 cursor-pointer">
                     <input type="checkbox" checked={selectedSizes.includes(s.id)} onChange={() => toggleSelection(setSelectedSizes, s.id)} className="accent-gold" />
                     <span className="text-sm font-sans">{s.name}</span>
@@ -302,13 +302,13 @@ export default function NewDressPage() {
             {/* Colors */}
             <div>
               <div className="flex items-center justify-between gap-2 mb-2">
-                <p className="text-xs font-sans font-semibold tracking-wider text-charcoal uppercase">Select Colors</p>
+                <p className="text-xs font-sans font-semibold tracking-wider text-charcoal uppercase">Seleccionar Colores</p>
                 <button type="button" onClick={toggleAllColors} className="px-3 py-1 bg-gold text-white text-xs rounded font-sans font-semibold hover:bg-opacity-90 transition">
-                  {selectedColors.length === allColors.length && allColors.length > 0 ? 'Clear All' : 'Select All'}
+                  {selectedColors.length === allColors.length && allColors.length > 0 ? 'Limpiar Todo' : 'Seleccionar Todo'}
                 </button>
               </div>
               <div className="border border-gray-200 rounded p-3 h-40 overflow-y-auto space-y-2">
-                {allColors.length === 0 ? <p className="text-xs text-body-gray italic">No colors available</p> : allColors.map(c => (
+                {allColors.length === 0 ? <p className="text-xs text-body-gray italic">No hay colores disponibles</p> : allColors.map(c => (
                   <label key={c.id} className="flex items-center gap-2 cursor-pointer">
                     <input type="checkbox" checked={selectedColors.includes(c.id)} onChange={() => toggleSelection(setSelectedColors, c.id)} className="accent-gold" />
                     <span className="text-sm font-sans flex items-center gap-2">
@@ -322,7 +322,7 @@ export default function NewDressPage() {
           </div>
 
           <button type="button" onClick={generateCombinations} className="btn-gold-filled mb-6 text-xs w-full py-2.5">
-            GENERATE COMBINATIONS
+            GENERAR COMBINACIONES
           </button>
 
           {variants.length > 0 && (
@@ -364,8 +364,8 @@ export default function NewDressPage() {
         </div>
 
         <div className="bg-white p-6 rounded-lg border border-gray-200">
-          <h2 className="text-lg font-heading text-charcoal mb-4 border-b pb-2">Images</h2>
-          <ImageUploader onUpload={files => setImages(prev => [...prev, ...files])} label="Upload dress images" />
+          <h2 className="text-lg font-heading text-charcoal mb-4 border-b pb-2">Imágenes</h2>
+          <ImageUploader onUpload={files => setImages(prev => [...prev, ...files])} label="Subir imágenes del vestido" />
 
           {images.length > 0 && (
             <div className="flex flex-wrap gap-3 mt-4">
@@ -382,9 +382,9 @@ export default function NewDressPage() {
 
         <div className="flex gap-4 pt-4 sticky bottom-0 bg-[#FAF9F6] border-t py-4">
           <button type="submit" disabled={saving} className="btn-gold-filled disabled:opacity-50 px-8">
-            {saving ? 'SAVING...' : 'CREATE DRESS'}
+            {saving ? 'GUARDANDO...' : 'CREAR VESTIDO'}
           </button>
-          <button type="button" onClick={() => router.back()} className="btn-gold px-8">CANCEL</button>
+          <button type="button" onClick={() => router.back()} className="btn-gold px-8">CANCELAR</button>
         </div>
       </form>
     </div>

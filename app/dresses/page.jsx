@@ -13,10 +13,10 @@ export default function DressesPage() {
   
   // Default descriptions for categories
   const categoryDescriptions = {
-    'bride': 'Find the dress of your dreams. Classic, modern, and romantic designs.',
-    'party': 'Elegance and sophistication for unforgettable nights.',
-    'godmother': 'Distinguished designs for an essential role. Classic cuts and styling.',
-    'cocktail': 'Chic, vibrant, and perfectly tailored for the modern celebration.'
+    'bride': 'Encuentra el vestido de tus sueños. Diseños clásicos, modernos y románticos.',
+    'party': 'Elegancia y sofisticación para noches inolvidables.',
+    'godmother': 'Diseños distinguidos para un papel esencial. Cortes y estilos clásicos.',
+    'cocktail': 'Chic, vibrante y perfectamente diseñado para la celebración moderna.'
   }
 
 
@@ -91,9 +91,9 @@ export default function DressesPage() {
         
         {/* Categories Grid Header */}
         <section className="pt-12 pb-12 px-6 md:px-12 max-w-[1800px] mx-auto text-center border-b border-[#E5E5E5]">
-          <h2 className="font-heading text-4xl lg:text-5xl text-[#333] mb-4 font-light">Shop by Category</h2>
+          <h2 className="font-heading text-4xl lg:text-5xl text-[#333] mb-4 font-light">Comprar por Categoría</h2>
           <p className="font-body text-[#7a7a7a] text-sm max-w-xl mx-auto mb-8">
-            Explore our curated collections designed to make you shine on your unforgettable day.
+            Explora nuestras colecciones diseñadas para que brilles en tu día especial.
           </p>
 
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
@@ -142,7 +142,7 @@ export default function DressesPage() {
                         <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-700" />
                         <div className="absolute inset-0 flex flex-col items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity duration-700 bg-black/30">
                           <span className="border border-white px-8 py-3 text-[11px] font-sans tracking-[3px] uppercase">
-                            View Category
+                            Ver Categoría
                           </span>
                         </div>
                       </div>
@@ -200,8 +200,8 @@ export default function DressesPage() {
                       {catDresses.length > 6 && (
                         <div className="w-[85%] md:w-[320px] lg:w-[350px] flex-shrink-0 snap-center flex items-center justify-center bg-transparent border border-[#E5E5E5] group">
                           <Link href={`/dresses/${cat.slug}`} className="flex flex-col items-center gap-3 text-[#333] group-hover:text-[#f05f42] transition-colors p-12">
-                            <span className="font-heading text-xl font-light">See all {catDresses.length}</span>
-                            <span className="text-[10px] font-sans tracking-[2px] uppercase border-b border-currentColor pb-1">View Category</span>
+                            <span className="font-heading text-xl font-light">Ver todos {catDresses.length}</span>
+                            <span className="text-[10px] font-sans tracking-[2px] uppercase border-b border-currentColor pb-1">Ver Categoría</span>
                           </Link>
                         </div>
                       )}
@@ -209,8 +209,8 @@ export default function DressesPage() {
                   ) : (
                     <div className="h-full min-h-[400px] flex items-center justify-center border border-[#E5E5E5] bg-white">
                       <div className="text-center p-8">
-                        <p className="font-heading text-2xl text-[#333] mb-2">Coming Soon</p>
-                        <p className="font-body text-[#7a7a7a] text-sm">We are currently updating our {cat.title} collection.</p>
+                        <p className="font-heading text-2xl text-[#333] mb-2">Próximamente</p>
+                        <p className="font-body text-[#7a7a7a] text-sm">Actualmente estamos actualizando nuestra colección de {cat.title}.</p>
                       </div>
                     </div>
                   )}
@@ -230,9 +230,9 @@ export default function DressesPage() {
             transition={{ duration: 1, ease: "easeOut" }}
             className="mb-16"
           >
-            <h2 className="font-heading text-5xl lg:text-6xl text-[#333] mb-4 font-light text-center">All Our Dresses</h2>
+            <h2 className="font-heading text-5xl lg:text-6xl text-[#333] mb-4 font-light text-center">Todos Nuestros Vestidos</h2>
             <p className="font-body text-[#7a7a7a] text-sm leading-relaxed text-center max-w-2xl mx-auto">
-              Explore our complete collection of wedding dresses, party wear, and special occasion gowns
+              Explora nuestra colección completa de vestidos de novia, de fiesta y de ocasiones especiales
             </p>
           </motion.div>
 
@@ -241,9 +241,12 @@ export default function DressesPage() {
             <div className="flex justify-end mb-6">
               <button
                 onClick={() => setIsFilterOpen(!isFilterOpen)}
-                className="flex items-center gap-2 px-6 py-3 border-2 border-charcoal text-charcoal font-sans font-semibold uppercase tracking-wide hover:bg-charcoal hover:text-white transition-all duration-300 text-sm"
+                className="relative flex items-center gap-2 px-6 py-3 border-2 border-charcoal text-charcoal font-sans font-semibold uppercase tracking-wide hover:bg-charcoal hover:text-white transition-all duration-300 text-sm"
               >
-                <span>FILTER</span>
+                <span>FILTRAR</span>
+                {selectedStyle !== null && (
+                  <span className="flex items-center justify-center w-5 h-5 rounded-full bg-gold text-white text-[10px] font-bold">1</span>
+                )}
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
                 </svg>
@@ -274,7 +277,7 @@ export default function DressesPage() {
                 >
                   {/* Header */}
                   <div className="flex justify-between items-center p-6 border-b border-gray-200 sticky top-0 bg-white">
-                    <h2 className="font-heading text-xl text-charcoal font-light">FILTER</h2>
+                    <h2 className="font-heading text-xl text-charcoal font-light">FILTRAR</h2>
                     <button
                       onClick={() => setIsFilterOpen(false)}
                       className="text-charcoal hover:text-gold transition-colors"
@@ -289,25 +292,25 @@ export default function DressesPage() {
                   <div className="p-6">
                     {/* Style Filter Section */}
                     <div className="mb-8">
-                      <h3 className="font-sans font-semibold text-charcoal uppercase tracking-wide text-sm mb-4">Filter by Style</h3>
-                      <button
-                        onClick={() => setSelectedStyle(null)}
-                        className={`w-full text-left px-4 py-3 border-2 transition-all mb-2 text-sm font-sans ${
-                          selectedStyle === null 
-                            ? 'border-gold bg-gold text-white' 
-                            : 'border-gray-300 text-body-gray hover:border-gold'
-                        }`}
-                      >
-                        All Styles
-                      </button>
+                      <div className="flex items-center justify-between mb-4">
+                        <h3 className="font-sans font-semibold text-charcoal uppercase tracking-wide text-sm">Filtrar por Estilo</h3>
+                        {selectedStyle !== null && (
+                          <button
+                            onClick={() => { setSelectedStyle(null); setIsFilterOpen(false) }}
+                            className="text-xs font-sans text-gold underline underline-offset-2 hover:text-charcoal transition-colors"
+                          >
+                            Limpiar filtro
+                          </button>
+                        )}
+                      </div>
                       <div className="space-y-2">
                         {availableStyles.map(style => (
                           <button
                             key={style.id}
-                            onClick={() => setSelectedStyle(style.id)}
+                            onClick={() => { setSelectedStyle(style.id); setIsFilterOpen(false) }}
                             className={`w-full text-left px-4 py-3 border-2 transition-all text-sm font-sans ${
-                              selectedStyle === style.id 
-                                ? 'border-gold bg-gold text-white' 
+                              selectedStyle === style.id
+                                ? 'border-gold bg-gold text-white'
                                 : 'border-gray-300 text-body-gray hover:border-gold'
                             }`}
                           >
@@ -327,13 +330,13 @@ export default function DressesPage() {
                       }}
                       className="flex-1 px-4 py-3 border-2 border-gray-300 text-charcoal font-sans font-semibold uppercase tracking-wide hover:bg-gray-100 transition-all text-sm"
                     >
-                      Clear
+                      Limpiar
                     </button>
                     <button
                       onClick={() => setIsFilterOpen(false)}
                       className="flex-1 px-4 py-3 bg-charcoal text-white font-sans font-semibold uppercase tracking-wide hover:bg-opacity-90 transition-all text-sm"
                     >
-                      View ({filteredDresses.length})
+                      Ver ({filteredDresses.length})
                     </button>
                   </div>
 
@@ -382,8 +385,8 @@ export default function DressesPage() {
           ) : (
             <div className="h-64 flex items-center justify-center border border-[#E5E5E5] bg-white rounded-lg">
               <div className="text-center">
-                <p className="font-heading text-2xl text-[#333] mb-2">No Dresses Found</p>
-                <p className="font-body text-[#7a7a7a] text-sm">No dresses match the selected style. Try a different filter.</p>
+                <p className="font-heading text-2xl text-[#333] mb-2">No se Encontraron Vestidos</p>
+                <p className="font-body text-[#7a7a7a] text-sm">Ningún vestido coincide con el estilo seleccionado. Prueba con otro filtro.</p>
               </div>
             </div>
           )}

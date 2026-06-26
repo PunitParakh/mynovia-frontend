@@ -7,21 +7,21 @@ export default function DressVariantSelector({ dress, variants }) {
     return (
       <div className="space-y-4 mb-10 p-6 bg-cream/50 border border-bar-tan/30">
         <div className="flex justify-between items-center py-2 border-b border-bar-tan/20">
-          <span className="text-sm font-sans text-body-gray">Price</span>
+          <span className="text-sm font-sans text-body-gray">Precio</span>
           <span className="text-lg font-sans font-medium text-charcoal">
-            {dress.price ? `€${dress.price}` : 'Price on request'}
+            {dress.price ? `€${dress.price}` : 'Precio bajo pedido'}
           </span>
         </div>
         <div className="flex justify-between items-center py-2 border-b border-bar-tan/20">
-          <span className="text-sm font-sans text-body-gray">Availability</span>
+          <span className="text-sm font-sans text-body-gray">Disponibilidad</span>
           <span className={`text-sm font-sans font-medium ${dress.is_available && dress.inventory_count > 0 ? 'text-green-700' : 'text-red-600'}`}>
-            {dress.is_available && dress.inventory_count > 0 ? 'In stock' : 'Not in stock / Contact for stock'}
+            {dress.is_available && dress.inventory_count > 0 ? 'En stock' : 'Sin stock / Contacta para disponibilidad'}
           </span>
         </div>
         {dress.delivery_time_days && (
           <div className="flex justify-between items-center py-2 border-b border-bar-tan/20">
-            <span className="text-sm font-sans text-body-gray">Delivery time</span>
-            <span className="text-sm font-sans text-charcoal">{dress.delivery_time_days} days</span>
+            <span className="text-sm font-sans text-body-gray">Plazo de entrega</span>
+            <span className="text-sm font-sans text-charcoal">{dress.delivery_time_days} días</span>
           </div>
         )}
       </div>
@@ -52,6 +52,15 @@ export default function DressVariantSelector({ dress, variants }) {
       if (v.dress_colors) co.set(v.dress_colors.id, v.dress_colors)
     })
     return Array.from(co.values())
+  }, [variants])
+
+  // Set of size IDs that have at least one variant with a real price
+  const sizeIdsWithPrice = useMemo(() => {
+    const ids = new Set()
+    variants.forEach(v => {
+      if (v.dress_sizes && v.price > 0) ids.add(v.dress_sizes.id)
+    })
+    return ids
   }, [variants])
 
   // State for selections
@@ -87,7 +96,7 @@ export default function DressVariantSelector({ dress, variants }) {
         {/* Styles */}
         {availableStyles.length > 0 && (
           <div>
-            <h3 className="text-sm font-sans font-semibold tracking-wider text-charcoal uppercase mb-3">Style</h3>
+            <h3 className="text-sm font-sans font-semibold tracking-wider text-charcoal uppercase mb-3">Estilo</h3>
             <div className="flex flex-wrap gap-2">
               {availableStyles.map(st => (
                 <button 
@@ -105,17 +114,27 @@ export default function DressVariantSelector({ dress, variants }) {
         {/* Sizes */}
         {availableSizes.length > 0 && (
           <div>
-            <h3 className="text-sm font-sans font-semibold tracking-wider text-charcoal uppercase mb-3">Size</h3>
+            <h3 className="text-sm font-sans font-semibold tracking-wider text-charcoal uppercase mb-3">Talla</h3>
             <div className="flex flex-wrap gap-2">
-              {availableSizes.map(sz => (
-                <button 
-                  key={sz.id} 
-                  onClick={() => setSelectedSize(sz.id)}
-                  className={`text-sm font-sans w-12 h-12 flex items-center justify-center border transition-colors ${selectedSize === sz.id ? 'border-gold bg-gold text-white' : 'border-gray-300 text-body-gray hover:border-gold hover:text-charcoal'}`}
-                >
-                  {sz.name}
-                </button>
-              ))}
+              {availableSizes.map(sz => {
+                const hasPrice = sizeIdsWithPrice.has(sz.id)
+                const isSelected = selectedSize === sz.id
+                return (
+                  <button
+                    key={sz.id}
+                    onClick={() => setSelectedSize(sz.id)}
+                    className={`relative text-sm font-sans w-12 h-12 flex items-center justify-center transition-colors ${
+                      isSelected
+                        ? 'border-2 border-gold bg-gold text-white'
+                        : hasPrice
+                        ? 'border-2 border-charcoal text-charcoal hover:border-gold hover:text-gold'
+                        : 'border border-gray-300 text-body-gray hover:border-gold hover:text-charcoal'
+                    }`}
+                  >
+                    {sz.name}
+                  </button>
+                )
+              })}
             </div>
           </div>
         )}
@@ -142,21 +161,21 @@ export default function DressVariantSelector({ dress, variants }) {
 
       <div className="space-y-4 p-6 bg-cream/50 border border-bar-tan/30">
         <div className="flex justify-between items-center py-2 border-b border-bar-tan/20">
-          <span className="text-sm font-sans text-body-gray">Price</span>
+          <span className="text-sm font-sans text-body-gray">Precio</span>
           <span className="text-xl font-sans font-medium text-charcoal">
-            {currentVariant?.price > 0 ? `€${currentVariant.price}` : (dress.price ? `€${dress.price}` : 'Price on request')}
+            {currentVariant?.price > 0 ? `€${currentVariant.price}` : (dress.price ? `€${dress.price}` : 'Precio bajo pedido')}
           </span>
         </div>
         <div className="flex justify-between items-center py-2 border-b border-bar-tan/20">
-          <span className="text-sm font-sans text-body-gray">Availability</span>
+          <span className="text-sm font-sans text-body-gray">Disponibilidad</span>
           <span className={`text-sm font-sans font-medium ${
             currentVariant
               ? (currentVariant.stock > 0 ? 'text-green-700' : 'text-red-600')
               : (dress.is_available && dress.inventory_count > 0 ? 'text-green-700' : 'text-red-600')
           }`}>
             {currentVariant
-              ? (currentVariant.stock > 0 ? 'In stock' : 'Not in stock / Contact for stock')
-              : (dress.is_available && dress.inventory_count > 0 ? 'In stock' : 'Not in stock / Contact for stock')
+              ? (currentVariant.stock > 0 ? 'En stock' : 'Sin stock / Contacta para disponibilidad')
+              : (dress.is_available && dress.inventory_count > 0 ? 'En stock' : 'Sin stock / Contacta para disponibilidad')
             }
           </span>
         </div>
@@ -168,8 +187,8 @@ export default function DressVariantSelector({ dress, variants }) {
         )}
         {dress.delivery_time_days && (
           <div className="flex justify-between items-center py-2 border-b border-bar-tan/20">
-            <span className="text-sm font-sans text-body-gray">Delivery time</span>
-            <span className="text-sm font-sans text-charcoal">{dress.delivery_time_days} days</span>
+            <span className="text-sm font-sans text-body-gray">Plazo de entrega</span>
+            <span className="text-sm font-sans text-charcoal">{dress.delivery_time_days} días</span>
           </div>
         )}
       </div>

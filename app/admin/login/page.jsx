@@ -23,7 +23,7 @@ export default function AdminLoginPage() {
       const data = await res.json()
 
       if (!res.ok) {
-        setError(data.error || 'Login failed')
+        setError(data.error || 'Error al iniciar sesión')
         setLoading(false)
         return
       }
@@ -34,7 +34,7 @@ export default function AdminLoginPage() {
       localStorage.setItem('mynovia_token_expires', Date.now() + 3600000)
       router.push('/admin')
     } catch (err) {
-      setError('Connection error')
+      setError('Error de conexión')
     }
 
     setLoading(false)
@@ -45,12 +45,12 @@ export default function AdminLoginPage() {
       <div className="w-full max-w-sm">
         <div className="text-center mb-10">
           <h1 className="font-heading text-[32px] tracking-[3px] text-charcoal uppercase">My Novia</h1>
-          <p className="text-xs font-sans text-body-gray tracking-wider mt-2 uppercase">Admin Portal</p>
+          <p className="text-xs font-sans text-body-gray tracking-wider mt-2 uppercase">Portal de Administración</p>
         </div>
 
         <form onSubmit={handleLogin} className="space-y-5">
           <div>
-            <label className="block text-xs font-sans font-semibold tracking-wider text-charcoal uppercase mb-2">Email</label>
+            <label className="block text-xs font-sans font-semibold tracking-wider text-charcoal uppercase mb-2">Correo electrónico</label>
             <input
               type="email"
               value={email}
@@ -60,7 +60,7 @@ export default function AdminLoginPage() {
             />
           </div>
           <div>
-            <label className="block text-xs font-sans font-semibold tracking-wider text-charcoal uppercase mb-2">Password</label>
+            <label className="block text-xs font-sans font-semibold tracking-wider text-charcoal uppercase mb-2">Contraseña</label>
             <input
               type="password"
               value={password}
@@ -73,7 +73,7 @@ export default function AdminLoginPage() {
           {error && <p className="text-red-600 text-sm font-sans">{error}</p>}
 
           <button type="submit" disabled={loading} className="btn-dark w-full text-center disabled:opacity-50">
-            {loading ? 'LOADING...' : 'LOGIN'}
+            {loading ? 'CARGANDO...' : 'INICIAR SESIÓN'}
           </button>
         </form>
       </div>

@@ -22,14 +22,14 @@ export async function generateMetadata({ params }) {
        const cat = cats.find(c => c.slug === params.slug)
        if (cat) {
          return {
-           title: `${cat.name} Accessories | My Novia`,
-           description: `Explore our collection of ${cat.name} accessories.`
+           title: `Accesorios ${cat.name} | My Novia`,
+           description: `Explora nuestra colección de accesorios ${cat.name}.`
          }
        }
      }
   } catch {}
 
-  return { title: 'Accessory — My Novia' }
+  return { title: 'Accesorio — My Novia' }
 }
 
 async function getAccessory(slug) {
@@ -64,14 +64,14 @@ export default async function AccessoryDetailPage({ params }) {
           categorySlug={category.slug}
           categoryName={category.name}
           coverImage={category.image_url || "https://images.unsplash.com/photo-1549416878-b9ca95e28ce4?w=800&q=80"}
-          description={category.description || `Explore our latest collection of ${category.name} accessories.`}
+          description={category.description || `Explora nuestra última colección de accesorios ${category.name}.`}
         />
       )
     }
     return (
       <div className="max-w-7xl mx-auto px-6 py-20 text-center">
-        <h1 className="section-heading mb-4">Accessory or Category not found</h1>
-        <Link href="/accessories" className="btn-gold">View Collection</Link>
+        <h1 className="section-heading mb-4">Accesorio o categoría no encontrado</h1>
+        <Link href="/accessories" className="btn-gold">Ver Colección</Link>
       </div>
     )
   }
@@ -84,7 +84,7 @@ export default async function AccessoryDetailPage({ params }) {
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
           <path d="M15 18l-6-6 6-6" />
         </svg>
-        Back to accessories
+        Volver a accesorios
       </Link>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
@@ -110,7 +110,7 @@ export default async function AccessoryDetailPage({ params }) {
             </div>
           ) : (
             <div className="aspect-[3/4] bg-cream flex items-center justify-center">
-              <p className="text-body-gray font-sans text-sm">No image</p>
+              <p className="text-body-gray font-sans text-sm">Sin imagen</p>
             </div>
           )}
         </div>
@@ -124,25 +124,25 @@ export default async function AccessoryDetailPage({ params }) {
 
           <div className="space-y-4 mb-10 p-6 bg-cream/50 border border-bar-tan/30">
             <div className="flex justify-between items-center py-2 border-b border-bar-tan/20">
-              <span className="text-sm font-sans text-body-gray">Price</span>
+              <span className="text-sm font-sans text-body-gray">Precio</span>
               <span className="text-lg font-display text-charcoal">
-                {acc.price ? `${acc.price}€` : 'Consult price'}
+                {acc.price ? `${acc.price}€` : 'Consultar precio'}
               </span>
             </div>
             <div className="flex justify-between items-center py-2 border-b border-bar-tan/20">
-              <span className="text-sm font-sans text-body-gray">Availability</span>
+              <span className="text-sm font-sans text-body-gray">Disponibilidad</span>
               <span className={`text-sm font-sans font-medium ${acc.is_available ? 'text-green-700' : 'text-gold'}`}>
-                {acc.is_available ? 'In stock' : 'On request'}
+                {acc.is_available ? 'En stock' : 'Disponible bajo pedido'}
               </span>
             </div>
           </div>
 
           <Link href="/book-appointment" className="btn-gold-filled w-full text-center block">
-            BOOK AN APPOINTMENT
+            RESERVAR CITA
           </Link>
 
           <p className="text-xs text-body-gray font-sans mt-4 text-center">
-            Visit us to see our accessories with personalized attention
+            Visítanos para ver nuestros accesorios con atención personalizada
           </p>
         </div>
       </div>

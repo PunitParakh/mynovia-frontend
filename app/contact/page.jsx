@@ -41,8 +41,8 @@ export default function ContactPage() {
   return (
     <div className="max-w-7xl mx-auto px-6 py-16">
       <div className="text-center mb-16">
-        <span className="section-eyebrow block mb-3">CONTACT</span>
-        <h1 className="section-heading">Contact Us</h1>
+        <span className="section-eyebrow block mb-3">CONTACTO</span>
+        <h1 className="section-heading">Contáctanos</h1>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
@@ -50,7 +50,7 @@ export default function ContactPage() {
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label className="block text-xs font-sans font-semibold tracking-wider text-charcoal uppercase mb-2">
-                Name *
+                Nombre *
               </label>
               <input
                 type="text"
@@ -62,7 +62,7 @@ export default function ContactPage() {
             </div>
             <div>
               <label className="block text-xs font-sans font-semibold tracking-wider text-charcoal uppercase mb-2">
-                Email *
+                Correo electrónico *
               </label>
               <input
                 type="email"
@@ -74,7 +74,7 @@ export default function ContactPage() {
             </div>
             <div>
               <label className="block text-xs font-sans font-semibold tracking-wider text-charcoal uppercase mb-2">
-                Phone
+                Teléfono
               </label>
               <input
                 type="tel"
@@ -85,7 +85,7 @@ export default function ContactPage() {
             </div>
             <div>
               <label className="block text-xs font-sans font-semibold tracking-wider text-charcoal uppercase mb-2">
-                Message *
+                Mensaje *
               </label>
               <textarea
                 value={form.message}
@@ -97,33 +97,33 @@ export default function ContactPage() {
             </div>
 
             {status === 'success' && (
-              <p className="text-green-700 text-sm font-sans">Message sent successfully! We will reply soon.</p>
+              <p className="text-green-700 text-sm font-sans">¡Mensaje enviado con éxito! Te responderemos pronto.</p>
             )}
             {status === 'error' && (
-              <p className="text-red-600 text-sm font-sans">Error sending message. Please try again.</p>
+              <p className="text-red-600 text-sm font-sans">Error al enviar el mensaje. Por favor, inténtalo de nuevo.</p>
             )}
 
             <button type="submit" disabled={sending} className="btn-gold-filled w-full text-center disabled:opacity-50">
-              {sending ? 'SENDING...' : 'SEND MESSAGE'}
+              {sending ? 'ENVIANDO...' : 'ENVIAR MENSAJE'}
             </button>
           </form>
         </div>
 
         <div className="space-y-8">
           <div>
-            <h3 className="font-sans text-[11px] font-semibold tracking-[2.5px] text-charcoal uppercase mb-4">Address</h3>
+            <h3 className="font-sans text-[11px] font-semibold tracking-[2.5px] text-charcoal uppercase mb-4">Dirección</h3>
             <p className="font-body text-body-gray text-sm whitespace-pre-line">{content.address}</p>
           </div>
           <div>
-            <h3 className="font-sans text-[11px] font-semibold tracking-[2.5px] text-charcoal uppercase mb-4">Phone</h3>
+            <h3 className="font-sans text-[11px] font-semibold tracking-[2.5px] text-charcoal uppercase mb-4">Teléfono</h3>
             <a href={`tel:${content.phone?.replace(/\s/g, '')}`} className="font-body text-body-gray text-sm hover:text-gold transition-colors">{content.phone}</a>
           </div>
           <div>
-            <h3 className="font-sans text-[11px] font-semibold tracking-[2.5px] text-charcoal uppercase mb-4">Email</h3>
+            <h3 className="font-sans text-[11px] font-semibold tracking-[2.5px] text-charcoal uppercase mb-4">Correo electrónico</h3>
             <a href={`mailto:${content.email}`} className="font-body text-body-gray text-sm hover:text-gold transition-colors">{content.email}</a>
           </div>
           <div>
-            <h3 className="font-sans text-[11px] font-semibold tracking-[2.5px] text-charcoal uppercase mb-4">Hours</h3>
+            <h3 className="font-sans text-[11px] font-semibold tracking-[2.5px] text-charcoal uppercase mb-4">Horario</h3>
             <div className="font-body text-body-gray text-sm whitespace-pre-line">
               {content.hours}
             </div>

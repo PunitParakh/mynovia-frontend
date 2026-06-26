@@ -69,13 +69,13 @@ export default function HeroUploader({ pageType, onUploadSuccess }) {
 
     // Validate file type
     if (!['image/png', 'image/jpeg', 'image/jpg'].includes(selectedFile.type)) {
-      setError('Only PNG and JPG images are allowed')
+      setError('Solo se permiten imágenes PNG y JPG')
       return
     }
 
     // Validate file size (10MB max)
     if (selectedFile.size > 10 * 1024 * 1024) {
-      setError('Image size must be less than 10MB')
+      setError('El tamaño de la imagen debe ser inferior a 10MB')
       return
     }
 
@@ -117,17 +117,17 @@ export default function HeroUploader({ pageType, onUploadSuccess }) {
   if (loading) {
     return (
       <div className="bg-white p-6 rounded-lg border border-gray-200 mb-8">
-        <p className="text-body-gray">Loading hero section...</p>
+        <p className="text-body-gray">Cargando sección hero...</p>
       </div>
     )
   }
 
   return (
     <div className="bg-white p-6 rounded-lg border border-gray-200 mb-8">
-      <LoadingOverlay isLoading={saving} message="Uploading hero image..." />
+      <LoadingOverlay isLoading={saving} message="Subiendo imagen hero..." />
       
-      <h2 className="text-lg font-heading text-charcoal mb-4">Hero Section Image</h2>
-      <p className="text-xs text-body-gray mb-6 font-sans">Single hero image for this page (max 10MB, PNG or JPG)</p>
+      <h2 className="text-lg font-heading text-charcoal mb-4">Imagen de la Sección Hero</h2>
+      <p className="text-xs text-body-gray mb-6 font-sans">Una imagen hero para esta página (máx. 10MB, PNG o JPG)</p>
 
       {error && (
         <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded text-red-700 text-xs font-sans">
@@ -138,7 +138,7 @@ export default function HeroUploader({ pageType, onUploadSuccess }) {
       {/* Current Hero Display */}
       {currentHero && !isReplacing && !isEditingText ? (
         <div className="mb-6">
-          <label className="block text-xs font-sans font-semibold tracking-wider text-charcoal uppercase mb-3">Current Hero Image</label>
+          <label className="block text-xs font-sans font-semibold tracking-wider text-charcoal uppercase mb-3">Imagen Hero Actual</label>
           <div className="relative w-full aspect-video bg-gray-100 overflow-hidden rounded border-2 border-gold/30">
             <img 
               src={currentHero.image_url} 
@@ -165,14 +165,14 @@ export default function HeroUploader({ pageType, onUploadSuccess }) {
               onClick={() => setIsReplacing(true)}
               className="flex-1 px-4 py-2.5 bg-gold text-white text-xs rounded font-sans font-semibold hover:bg-opacity-90 transition"
             >
-              Replace Image
+              Reemplazar Imagen
             </button>
             <button
               type="button"
               onClick={startEditingText}
               className="flex-1 px-4 py-2.5 bg-charcoal text-white text-xs rounded font-sans font-semibold hover:bg-opacity-90 transition"
             >
-              Edit Text
+              Editar Texto
             </button>
           </div>
         </div>
@@ -181,11 +181,11 @@ export default function HeroUploader({ pageType, onUploadSuccess }) {
       {/* Edit Text Mode */}
       {isEditingText ? (
         <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-          <h3 className="text-sm font-heading text-charcoal mb-4">Edit Hero Section Text</h3>
+          <h3 className="text-sm font-heading text-charcoal mb-4">Editar Texto de la Sección Hero</h3>
           
           <div className="space-y-4">
             <div>
-              <label className="block text-xs font-sans font-semibold text-charcoal mb-2 uppercase">Hero Title</label>
+              <label className="block text-xs font-sans font-semibold text-charcoal mb-2 uppercase">Título del Hero</label>
               <input
                 type="text"
                 value={editTitle}
@@ -196,7 +196,7 @@ export default function HeroUploader({ pageType, onUploadSuccess }) {
             </div>
 
             <div>
-              <label className="block text-xs font-sans font-semibold text-charcoal mb-2 uppercase">Hero Description</label>
+              <label className="block text-xs font-sans font-semibold text-charcoal mb-2 uppercase">Descripción del Hero</label>
               <textarea
                 value={editDescription}
                 onChange={e => setEditDescription(e.target.value)}
@@ -207,9 +207,9 @@ export default function HeroUploader({ pageType, onUploadSuccess }) {
             </div>
 
             <div className="p-3 bg-white border border-gray-200 rounded">
-              <p className="text-xs font-sans text-body-gray mb-2"><strong>Preview:</strong></p>
-              <p className="text-sm font-heading text-charcoal mb-2">{editTitle || '(No title)'}</p>
-              <p className="text-xs text-body-gray">{editDescription || '(No description)'}</p>
+              <p className="text-xs font-sans text-body-gray mb-2"><strong>Vista previa:</strong></p>
+              <p className="text-sm font-heading text-charcoal mb-2">{editTitle || '(Sin título)'}</p>
+              <p className="text-xs text-body-gray">{editDescription || '(Sin descripción)'}</p>
             </div>
 
             <div className="flex gap-2">
@@ -219,7 +219,7 @@ export default function HeroUploader({ pageType, onUploadSuccess }) {
                 disabled={saving}
                 className="flex-1 px-4 py-2.5 bg-green-600 text-white text-xs rounded font-sans font-semibold hover:bg-green-700 disabled:opacity-50 transition"
               >
-                {saving ? 'Saving...' : 'Save Text'}
+                {saving ? 'Guardando...' : 'Guardar Texto'}
               </button>
               <button
                 type="button"
@@ -227,7 +227,7 @@ export default function HeroUploader({ pageType, onUploadSuccess }) {
                 disabled={saving}
                 className="flex-1 px-4 py-2.5 border border-gray-300 text-charcoal text-xs rounded font-sans font-semibold hover:bg-gray-50 disabled:opacity-50 transition"
               >
-                Cancel
+                Cancelar
               </button>
             </div>
           </div>
@@ -237,7 +237,7 @@ export default function HeroUploader({ pageType, onUploadSuccess }) {
       {/* Upload Preview */}
       {preview && isReplacing ? (
         <div className="mb-6">
-          <label className="block text-xs font-sans font-semibold tracking-wider text-charcoal uppercase mb-3">New Image Preview</label>
+          <label className="block text-xs font-sans font-semibold tracking-wider text-charcoal uppercase mb-3">Vista Previa de Nueva Imagen</label>
           <div className="relative w-full aspect-video bg-gray-100 overflow-hidden rounded border border-gold">
             <img src={preview} alt="Preview" className="w-full h-full object-cover" />
           </div>
@@ -248,14 +248,14 @@ export default function HeroUploader({ pageType, onUploadSuccess }) {
               disabled={saving}
               className="flex-1 px-4 py-2.5 bg-gold text-white text-xs rounded font-sans font-semibold hover:bg-opacity-90 disabled:opacity-50 transition"
             >
-              Confirm & Upload
+              Confirmar y Subir
             </button>
             <button
               type="button"
               onClick={handleCancel}
               className="flex-1 px-4 py-2.5 border border-gray-300 text-charcoal text-xs rounded font-sans font-semibold hover:bg-gray-50 transition"
             >
-              Cancel
+              Cancelar
             </button>
           </div>
         </div>
@@ -264,7 +264,7 @@ export default function HeroUploader({ pageType, onUploadSuccess }) {
       {/* File Upload Input */}
       {isReplacing && !preview ? (
         <div>
-          <label className="block text-xs font-sans font-semibold tracking-wider text-charcoal uppercase mb-3">Select Image to Replace</label>
+          <label className="block text-xs font-sans font-semibold tracking-wider text-charcoal uppercase mb-3">Seleccionar Imagen para Reemplazar</label>
           <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center cursor-pointer hover:border-gold hover:bg-gold/5 transition">
             <input
               type="file"
@@ -275,8 +275,8 @@ export default function HeroUploader({ pageType, onUploadSuccess }) {
             />
             <label htmlFor="hero-upload" className="cursor-pointer block">
               <div className="text-3xl mb-2">📸</div>
-              <p className="text-sm font-sans text-charcoal font-medium">Click to select image</p>
-              <p className="text-xs text-body-gray mt-1">PNG or JPG only</p>
+              <p className="text-sm font-sans text-charcoal font-medium">Haz clic para seleccionar imagen</p>
+              <p className="text-xs text-body-gray mt-1">Solo PNG o JPG</p>
             </label>
           </div>
         </div>
@@ -285,15 +285,15 @@ export default function HeroUploader({ pageType, onUploadSuccess }) {
       {/* Empty State */}
       {!currentHero && !isReplacing && !preview ? (
         <div>
-          <label className="block text-xs font-sans font-semibold tracking-wider text-charcoal uppercase mb-3">Upload Hero Image</label>
+          <label className="block text-xs font-sans font-semibold tracking-wider text-charcoal uppercase mb-3">Subir Imagen Hero</label>
           <button
             type="button"
             onClick={() => setIsReplacing(true)}
             className="w-full border-2 border-dashed border-gray-300 rounded-lg p-8 text-center cursor-pointer hover:border-gold hover:bg-gold/5 transition"
           >
             <div className="text-3xl mb-2">📸</div>
-            <p className="text-sm font-sans text-charcoal font-medium">Click to upload first hero image</p>
-            <p className="text-xs text-body-gray mt-1">PNG or JPG (max 10MB, recommended 1920x800px)</p>
+            <p className="text-sm font-sans text-charcoal font-medium">Haz clic para subir la primera imagen hero</p>
+            <p className="text-xs text-body-gray mt-1">PNG o JPG (máx. 10MB, recomendado 1920x800px)</p>
           </button>
         </div>
       ) : null}
