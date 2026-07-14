@@ -4,7 +4,7 @@ import Link from 'next/link'
 
 export default function AnnouncementBar() {
   const [text, setText] = useState('¡Te ayudamos a hacer tus sueños realidad!')
-  const [linkText, setLinkText] = useState('Reserva tu cita hoy')
+  const [linkText, setLinkText] = useState('Pide tu cita hoy')
   const [visible, setVisible] = useState(true)
 
   if (!visible) return null

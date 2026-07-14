@@ -1,5 +1,5 @@
 export const metadata = {
-  title: 'Reserva tu Cita — My Novia',
+  title: 'Pide tu Cita — My Novia',
   description: 'Reserva una cita privada en My Novia para encontrar el vestido de tus sueños en Almería.'
 }
 

@@ -42,7 +42,7 @@ export default function AppointmentCTA({ data }) {
           {content.eyebrow || 'TU VIAJE COMIENZA AQUÍ'}
         </motion.span>
         <motion.h2 variants={textVariants} className="font-heading text-4xl md:text-5xl lg:text-6xl font-light mb-8 text-white drop-shadow-sm">
-          {content.heading || 'Reserva tu Cita Privada'}
+          {content.heading || 'Pide tu Cita Privada'}
         </motion.h2>
         <motion.p variants={textVariants} className="font-body text-white/90 mb-12 text-base md:text-lg max-w-xl mx-auto font-light leading-relaxed">
           {content.subtext || 'Vive una experiencia exclusiva con atención personalizada. Te ayudamos a encontrar el vestido perfecto para tu gran día en un entorno íntimo y lujoso.'}

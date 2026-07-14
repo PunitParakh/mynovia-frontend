@@ -7,7 +7,7 @@ const footerLinks = [
   { label: 'Vestidos', href: '/dresses' },
   { label: 'Accesorios', href: '/accessories' },
   { label: 'Galería', href: '/gallery' },
-  { label: 'Nuestra Historia', href: '/about' },
+  { label: 'Conócenos', href: '/about' },
   { label: 'Contacto', href: '/contact' },
   { label: 'Reservar Cita', href: '/book-appointment' }
 ]

@@ -97,7 +97,7 @@ export default function Navbar() {
 
   const navLinksRight = [
     { label: 'GALERÍA', href: '/gallery' },
-    { label: 'NUESTRA HISTORIA', href: '/about' },
+    { label: 'CONÓCENOS', href: '/about' },
     { label: 'CONTACTO', href: '/contact' }
   ]
 
@@ -109,7 +109,7 @@ export default function Navbar() {
             <div className="hidden lg:flex flex-1 items-center gap-8">
               {/* OUR STORY Link */}
               <Link href="/about" className={`text-[11px] font-sans font-medium tracking-[2.5px] uppercase transition-all duration-300 ${textColor} ${hoverColor}`}>
-                NUESTRA HISTORIA
+                CONÓCENOS
               </Link>
 
               {/* Dresses Dropdown */}
@@ -182,7 +182,7 @@ export default function Navbar() {
             </Link>
 
             <div className="hidden lg:flex flex-1 items-center justify-end gap-8">
-              {navLinksRight.filter(link => link.label !== 'NUESTRA HISTORIA').map(link => (
+              {navLinksRight.filter(link => link.label !== 'CONÓCENOS').map(link => (
                 <Link key={link.href} href={link.href} className={`text-[11px] font-sans font-medium tracking-[2.5px] uppercase transition-all duration-300 ${textColor} ${hoverColor}`}>
                   {link.label}
                 </Link>
